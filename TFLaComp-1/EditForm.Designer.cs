@@ -1,6 +1,6 @@
 ﻿namespace TFLaComp_1
 {
-    partial class TestForm
+    partial class EditForm
     {
         /// <summary>
         /// Required designer variable.
@@ -48,17 +48,20 @@
             // 
             // richTextBoxInput
             // 
-            richTextBoxInput.Location = new Point(102, 82);
+            richTextBoxInput.Location = new Point(89, 62);
+            richTextBoxInput.Margin = new Padding(3, 2, 3, 2);
             richTextBoxInput.Name = "richTextBoxInput";
-            richTextBoxInput.Size = new Size(694, 312);
+            richTextBoxInput.Size = new Size(608, 235);
             richTextBoxInput.TabIndex = 1;
             richTextBoxInput.Text = "";
+            richTextBoxInput.KeyDown += richTextBoxInput_KeyDown;
             // 
             // buttonUndo
             // 
-            buttonUndo.Location = new Point(102, 37);
+            buttonUndo.Location = new Point(89, 28);
+            buttonUndo.Margin = new Padding(3, 2, 3, 2);
             buttonUndo.Name = "buttonUndo";
-            buttonUndo.Size = new Size(94, 29);
+            buttonUndo.Size = new Size(82, 22);
             buttonUndo.TabIndex = 2;
             buttonUndo.Text = "Undo";
             buttonUndo.UseVisualStyleBackColor = true;
@@ -66,9 +69,10 @@
             // 
             // buttonRedo
             // 
-            buttonRedo.Location = new Point(202, 37);
+            buttonRedo.Location = new Point(177, 28);
+            buttonRedo.Margin = new Padding(3, 2, 3, 2);
             buttonRedo.Name = "buttonRedo";
-            buttonRedo.Size = new Size(94, 29);
+            buttonRedo.Size = new Size(82, 22);
             buttonRedo.TabIndex = 3;
             buttonRedo.Text = "Redo";
             buttonRedo.UseVisualStyleBackColor = true;
@@ -76,9 +80,10 @@
             // 
             // buttonCopy
             // 
-            buttonCopy.Location = new Point(402, 37);
+            buttonCopy.Location = new Point(352, 28);
+            buttonCopy.Margin = new Padding(3, 2, 3, 2);
             buttonCopy.Name = "buttonCopy";
-            buttonCopy.Size = new Size(94, 29);
+            buttonCopy.Size = new Size(82, 22);
             buttonCopy.TabIndex = 4;
             buttonCopy.Text = "Copy";
             buttonCopy.UseVisualStyleBackColor = true;
@@ -86,9 +91,10 @@
             // 
             // buttonPaste
             // 
-            buttonPaste.Location = new Point(502, 37);
+            buttonPaste.Location = new Point(439, 28);
+            buttonPaste.Margin = new Padding(3, 2, 3, 2);
             buttonPaste.Name = "buttonPaste";
-            buttonPaste.Size = new Size(94, 29);
+            buttonPaste.Size = new Size(82, 22);
             buttonPaste.TabIndex = 5;
             buttonPaste.Text = "Paste";
             buttonPaste.UseVisualStyleBackColor = true;
@@ -96,9 +102,10 @@
             // 
             // buttonCut
             // 
-            buttonCut.Location = new Point(302, 37);
+            buttonCut.Location = new Point(264, 28);
+            buttonCut.Margin = new Padding(3, 2, 3, 2);
             buttonCut.Name = "buttonCut";
-            buttonCut.Size = new Size(94, 29);
+            buttonCut.Size = new Size(82, 22);
             buttonCut.TabIndex = 6;
             buttonCut.Text = "Cut";
             buttonCut.UseVisualStyleBackColor = true;
@@ -106,9 +113,10 @@
             // 
             // buttonDelete
             // 
-            buttonDelete.Location = new Point(602, 37);
+            buttonDelete.Location = new Point(527, 28);
+            buttonDelete.Margin = new Padding(3, 2, 3, 2);
             buttonDelete.Name = "buttonDelete";
-            buttonDelete.Size = new Size(94, 29);
+            buttonDelete.Size = new Size(82, 22);
             buttonDelete.TabIndex = 7;
             buttonDelete.Text = "Delete";
             buttonDelete.UseVisualStyleBackColor = true;
@@ -116,19 +124,20 @@
             // 
             // buttonSelectAll
             // 
-            buttonSelectAll.Location = new Point(702, 37);
+            buttonSelectAll.Location = new Point(614, 28);
+            buttonSelectAll.Margin = new Padding(3, 2, 3, 2);
             buttonSelectAll.Name = "buttonSelectAll";
-            buttonSelectAll.Size = new Size(94, 29);
+            buttonSelectAll.Size = new Size(82, 22);
             buttonSelectAll.TabIndex = 8;
             buttonSelectAll.Text = "SelectAll";
             buttonSelectAll.UseVisualStyleBackColor = true;
             buttonSelectAll.Click += buttonSelectAll_Click;
             // 
-            // TestForm
+            // EditForm
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(890, 450);
+            ClientSize = new Size(779, 338);
             Controls.Add(buttonSelectAll);
             Controls.Add(buttonDelete);
             Controls.Add(buttonCut);
@@ -137,8 +146,9 @@
             Controls.Add(buttonRedo);
             Controls.Add(buttonUndo);
             Controls.Add(richTextBoxInput);
-            Name = "TestForm";
-            Text = "TestForm";
+            Margin = new Padding(3, 2, 3, 2);
+            Name = "EditForm";
+            Text = "EditForm";
             ResumeLayout(false);
         }
 

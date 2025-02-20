@@ -11,11 +11,11 @@ using TFLaComp_1.Functional;
 
 namespace TFLaComp_1
 {
-    public partial class TestForm : Form
+    public partial class EditForm : Form
     {
         private IEdit _edit;
 
-        public TestForm()
+        public EditForm()
         {
             InitializeComponent();
 
@@ -55,6 +55,11 @@ namespace TFLaComp_1
         private void buttonSelectAll_Click(object sender, EventArgs e)
         {
             _edit.SelectAll();
+        }
+
+        private void richTextBoxInput_KeyDown(object sender, KeyEventArgs e)
+        {
+            _edit.SaveAction();
         }
     }
 }

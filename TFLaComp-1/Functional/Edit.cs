@@ -17,7 +17,9 @@
             _undoText = new Stack<string>();
             _redoText = new Stack<string>();
 
-            _undoText.Push(_richTextBox.Text);
+            _copiedText = string.Empty;
+
+            SaveAction();
         }
 
         public void Undo()
@@ -34,8 +36,8 @@
 
             string text = _redoText.Pop();
 
-            _undoText.Push(_richTextBox.Text);
-            _undoText.Push(text);
+            SaveAction();
+
             _richTextBox.Text = text;
         }
 
@@ -43,15 +45,17 @@
         {
             string selectedText = _richTextBox.SelectedText;
 
-            if (selectedText.Length <= 0) return;
+            if (string.IsNullOrEmpty(selectedText)) return;
 
             int selectionStart = _richTextBox.SelectionStart;
+
+            Clipboard.SetText(selectedText, TextDataFormat.Text);
 
             _copiedText = selectedText;
             
             string text = _richTextBox.Text.Remove(_richTextBox.SelectionStart, _copiedText.Length);
 
-            _undoText.Push(_richTextBox.Text);
+            SaveAction();
 
             _richTextBox.Text = text;
 
@@ -61,19 +65,24 @@
         public void Copy()
         {
             string selectedText = _richTextBox.SelectedText;
-            if (selectedText.Length <= 0) return;
+            if (string.IsNullOrEmpty(selectedText)) return;
+
+            Clipboard.SetText(selectedText, TextDataFormat.Text);
 
             _copiedText = selectedText;
         }
 
         public void Paste()
         {
-            if (_copiedText.Length <= 0) return;
+            _copiedText = Clipboard.GetText(TextDataFormat.Text);
+
+            if (string.IsNullOrEmpty(_copiedText)) return;
 
             int selectionStart = _richTextBox.SelectionStart + _copiedText.Length;
+
             string text = _richTextBox.Text.Insert(_richTextBox.SelectionStart, _copiedText);
 
-            _undoText.Push(_richTextBox.Text);
+            SaveAction();
 
             _richTextBox.Text = text;
 
@@ -83,11 +92,12 @@
         public void Delete()
         {
             string selectedText = _richTextBox.SelectedText;
-            if (selectedText.Length <= 0) return;
+
+            if (string.IsNullOrEmpty(selectedText)) return;
 
             string text = _richTextBox.Text.Remove(_richTextBox.SelectionStart, selectedText.Length);
 
-            _undoText.Push(_richTextBox.Text);
+            SaveAction();
 
             _richTextBox.Text = text;
         }
@@ -95,6 +105,11 @@
         public void SelectAll()
         {
             _richTextBox.SelectAll();
+        }
+
+        public void SaveAction()
+        {
+            _undoText.Push(_richTextBox.Text);
         }
     }
 }
