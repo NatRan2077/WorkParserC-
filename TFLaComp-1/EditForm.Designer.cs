@@ -38,6 +38,7 @@
             buttonCut = new Button();
             buttonDelete = new Button();
             buttonSelectAll = new Button();
+            helpProvider1 = new HelpProvider();
             SuspendLayout();
             // 
             // contextMenuStrip1
@@ -48,20 +49,23 @@
             // 
             // richTextBoxInput
             // 
-            richTextBoxInput.Location = new Point(89, 62);
-            richTextBoxInput.Margin = new Padding(3, 2, 3, 2);
+            helpProvider1.SetHelpKeyword(richTextBoxInput, "file.htm");
+            helpProvider1.SetHelpNavigator(richTextBoxInput, HelpNavigator.Topic);
+            richTextBoxInput.Location = new Point(127, 103);
+            richTextBoxInput.Margin = new Padding(4, 3, 4, 3);
             richTextBoxInput.Name = "richTextBoxInput";
-            richTextBoxInput.Size = new Size(608, 235);
+            helpProvider1.SetShowHelp(richTextBoxInput, true);
+            richTextBoxInput.Size = new Size(867, 389);
             richTextBoxInput.TabIndex = 1;
             richTextBoxInput.Text = "";
             richTextBoxInput.KeyDown += richTextBoxInput_KeyDown;
             // 
             // buttonUndo
             // 
-            buttonUndo.Location = new Point(89, 28);
-            buttonUndo.Margin = new Padding(3, 2, 3, 2);
+            buttonUndo.Location = new Point(127, 47);
+            buttonUndo.Margin = new Padding(4, 3, 4, 3);
             buttonUndo.Name = "buttonUndo";
-            buttonUndo.Size = new Size(82, 22);
+            buttonUndo.Size = new Size(117, 37);
             buttonUndo.TabIndex = 2;
             buttonUndo.Text = "Undo";
             buttonUndo.UseVisualStyleBackColor = true;
@@ -69,10 +73,10 @@
             // 
             // buttonRedo
             // 
-            buttonRedo.Location = new Point(177, 28);
-            buttonRedo.Margin = new Padding(3, 2, 3, 2);
+            buttonRedo.Location = new Point(253, 47);
+            buttonRedo.Margin = new Padding(4, 3, 4, 3);
             buttonRedo.Name = "buttonRedo";
-            buttonRedo.Size = new Size(82, 22);
+            buttonRedo.Size = new Size(117, 37);
             buttonRedo.TabIndex = 3;
             buttonRedo.Text = "Redo";
             buttonRedo.UseVisualStyleBackColor = true;
@@ -80,10 +84,10 @@
             // 
             // buttonCopy
             // 
-            buttonCopy.Location = new Point(352, 28);
-            buttonCopy.Margin = new Padding(3, 2, 3, 2);
+            buttonCopy.Location = new Point(503, 47);
+            buttonCopy.Margin = new Padding(4, 3, 4, 3);
             buttonCopy.Name = "buttonCopy";
-            buttonCopy.Size = new Size(82, 22);
+            buttonCopy.Size = new Size(117, 37);
             buttonCopy.TabIndex = 4;
             buttonCopy.Text = "Copy";
             buttonCopy.UseVisualStyleBackColor = true;
@@ -91,10 +95,10 @@
             // 
             // buttonPaste
             // 
-            buttonPaste.Location = new Point(439, 28);
-            buttonPaste.Margin = new Padding(3, 2, 3, 2);
+            buttonPaste.Location = new Point(627, 47);
+            buttonPaste.Margin = new Padding(4, 3, 4, 3);
             buttonPaste.Name = "buttonPaste";
-            buttonPaste.Size = new Size(82, 22);
+            buttonPaste.Size = new Size(117, 37);
             buttonPaste.TabIndex = 5;
             buttonPaste.Text = "Paste";
             buttonPaste.UseVisualStyleBackColor = true;
@@ -102,10 +106,10 @@
             // 
             // buttonCut
             // 
-            buttonCut.Location = new Point(264, 28);
-            buttonCut.Margin = new Padding(3, 2, 3, 2);
+            buttonCut.Location = new Point(377, 47);
+            buttonCut.Margin = new Padding(4, 3, 4, 3);
             buttonCut.Name = "buttonCut";
-            buttonCut.Size = new Size(82, 22);
+            buttonCut.Size = new Size(117, 37);
             buttonCut.TabIndex = 6;
             buttonCut.Text = "Cut";
             buttonCut.UseVisualStyleBackColor = true;
@@ -113,10 +117,10 @@
             // 
             // buttonDelete
             // 
-            buttonDelete.Location = new Point(527, 28);
-            buttonDelete.Margin = new Padding(3, 2, 3, 2);
+            buttonDelete.Location = new Point(753, 47);
+            buttonDelete.Margin = new Padding(4, 3, 4, 3);
             buttonDelete.Name = "buttonDelete";
-            buttonDelete.Size = new Size(82, 22);
+            buttonDelete.Size = new Size(117, 37);
             buttonDelete.TabIndex = 7;
             buttonDelete.Text = "Delete";
             buttonDelete.UseVisualStyleBackColor = true;
@@ -124,10 +128,10 @@
             // 
             // buttonSelectAll
             // 
-            buttonSelectAll.Location = new Point(614, 28);
-            buttonSelectAll.Margin = new Padding(3, 2, 3, 2);
+            buttonSelectAll.Location = new Point(877, 47);
+            buttonSelectAll.Margin = new Padding(4, 3, 4, 3);
             buttonSelectAll.Name = "buttonSelectAll";
-            buttonSelectAll.Size = new Size(82, 22);
+            buttonSelectAll.Size = new Size(117, 37);
             buttonSelectAll.TabIndex = 8;
             buttonSelectAll.Text = "SelectAll";
             buttonSelectAll.UseVisualStyleBackColor = true;
@@ -135,9 +139,9 @@
             // 
             // EditForm
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(779, 338);
+            ClientSize = new Size(1113, 563);
             Controls.Add(buttonSelectAll);
             Controls.Add(buttonDelete);
             Controls.Add(buttonCut);
@@ -146,8 +150,10 @@
             Controls.Add(buttonRedo);
             Controls.Add(buttonUndo);
             Controls.Add(richTextBoxInput);
-            Margin = new Padding(3, 2, 3, 2);
+            helpProvider1.SetHelpNavigator(this, HelpNavigator.TableOfContents);
+            Margin = new Padding(4, 3, 4, 3);
             Name = "EditForm";
+            helpProvider1.SetShowHelp(this, true);
             Text = "EditForm";
             ResumeLayout(false);
         }
@@ -162,5 +168,6 @@
         private Button buttonCut;
         private Button buttonDelete;
         private Button buttonSelectAll;
+        private HelpProvider helpProvider1;
     }
 }
