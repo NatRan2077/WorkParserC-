@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using TFLaComp_1.Functional;
+using TFLaComp_1.ParserHelp;
 
 namespace TFLaComp_1
 {
@@ -15,11 +16,32 @@ namespace TFLaComp_1
     {
         private IEdit _edit;
 
+        private IParserHelpProvider _helpProvider;
+
         public EditForm()
         {
             InitializeComponent();
 
+            this.HelpButton = true;
+
             _edit = new Edit(richTextBoxInput);
+            //_helpProvider = new ParserHelpProvider($"\\ParserHelp\\res\\parserHelpProvider.chm");
+            //helpProvider1 = _helpProvider.HelpProvider;
+            //helpProvider1.HelpNamespace = $"ParserHelp\\res\\parserHelpProvider.chm";
+
+
+            _helpProvider = new ParserHelpProvider();
+            _helpProvider.SetHelp(richTextBoxInput, HelpHtmDict.TopicDict["Правка"], HelpNavigator.Topic);
+            _helpProvider.SetHelp(buttonUndo, "Отменить", HelpNavigator.KeywordIndex);
+            _helpProvider.SetHelp(buttonRedo, "Повторить", HelpNavigator.KeywordIndex);
+            _helpProvider.SetHelp(buttonCopy, "Копировать", HelpNavigator.KeywordIndex);
+            _helpProvider.SetHelp(buttonCut, "Вырезать", HelpNavigator.KeywordIndex);
+            _helpProvider.SetHelp(buttonPaste, "Вставить", HelpNavigator.KeywordIndex);
+            _helpProvider.SetHelp(buttonDelete, "Удалить", HelpNavigator.KeywordIndex);
+            _helpProvider.SetHelp(buttonSelectAll, "Выделить все", HelpNavigator.KeywordIndex);
+
+            // добавить какой-то Binding?
+            helpProvider1 = _helpProvider.HelpProvider;
         }
 
         private void buttonUndo_Click(object sender, EventArgs e)
