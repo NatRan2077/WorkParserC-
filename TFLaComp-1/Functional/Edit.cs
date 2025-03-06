@@ -19,7 +19,7 @@
 
             _copiedText = string.Empty;
 
-            SaveAction();
+            SaveUndo();
         }
 
         public void Undo()
@@ -36,7 +36,7 @@
 
             string text = _redoText.Pop();
 
-            SaveAction();
+            SaveUndo();
 
             _richTextBox.Text = text;
         }
@@ -55,7 +55,7 @@
             
             string text = _richTextBox.Text.Remove(_richTextBox.SelectionStart, _copiedText.Length);
 
-            SaveAction();
+            SaveUndo();
 
             _richTextBox.Text = text;
 
@@ -82,7 +82,7 @@
 
             string text = _richTextBox.Text.Insert(_richTextBox.SelectionStart, _copiedText);
 
-            SaveAction();
+            SaveUndo();
 
             _richTextBox.Text = text;
 
@@ -97,7 +97,7 @@
 
             string text = _richTextBox.Text.Remove(_richTextBox.SelectionStart, selectedText.Length);
 
-            SaveAction();
+            SaveUndo();
 
             _richTextBox.Text = text;
         }
@@ -107,8 +107,15 @@
             _richTextBox.SelectAll();
         }
 
-        public void SaveAction()
+        public void SaveUndo()
         {
+            string? peek;
+
+            if (_undoText.TryPeek(out peek))
+            {
+                if (_richTextBox.Text == peek) return;
+            }
+
             _undoText.Push(_richTextBox.Text);
         }
     }

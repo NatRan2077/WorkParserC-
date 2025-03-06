@@ -81,7 +81,7 @@ namespace TFLaComp_1
 
         private void richTextBoxInput_KeyDown(object sender, KeyEventArgs e)
         {
-            _edit.SaveAction();
+            _edit.SaveUndo();
         }
     }
 }
