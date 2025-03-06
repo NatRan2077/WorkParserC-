@@ -10,14 +10,14 @@ namespace TFLaComp_1
     {
         private string currentFilePath = string.Empty;
 
-        public void Create(string text)
+        public void Create(ref string text)
         {
             text = string.Empty;
             currentFilePath = string.Empty;
         }
 
 
-        public void Open()
+        public string Open()
         {
             using (OpenFileDialog openFileDialog = new OpenFileDialog())
             {
@@ -25,20 +25,37 @@ namespace TFLaComp_1
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
                     currentFilePath = openFileDialog.FileName;
+                    //try
+                    //{
+                        return File.ReadAllText(currentFilePath);
+                    //}
+                    //catch (Exception ex)
+                    //{
+                    //    new Exception("Ошибка при чтении файла", ex);
+                    //}
                 }
             }
+            return null;
         }
 
         public void Save(string text)
         {
-            using (SaveFileDialog saveFileDialog = new SaveFileDialog())
+            if (string.IsNullOrEmpty(currentFilePath))
             {
-                saveFileDialog.Filter = "Текстовые файлы (*.txt)|*.txt|Все файлы (*.*)|*.*";
-                if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                using (SaveFileDialog saveFileDialog = new SaveFileDialog())
                 {
-                    currentFilePath = saveFileDialog.FileName;
-                    File.WriteAllText(currentFilePath, text);
+                    saveFileDialog.Filter = "Текстовые файлы (*.txt)|*.txt|Все файлы (*.*)|*.*";
+
+                    if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                    {
+                        currentFilePath = saveFileDialog.FileName;
+                        File.WriteAllText(currentFilePath, text);
+                    }
                 }
+            }
+            else
+            {
+                File.WriteAllText(currentFilePath, text);
             }
         }
 
@@ -57,7 +74,7 @@ namespace TFLaComp_1
 
         public void Close()
         {
-            Application.Exit();
+            //Application.Exit();
         }
     }
 }

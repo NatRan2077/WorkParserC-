@@ -8,10 +8,10 @@ namespace TFLaComp_1
 {
     public interface IFileLogic
     {
-        void Create(string text);
+        void Create(ref string text);
         void Save(string text);
         void SaveAs(string text);
-        void Open();
+        string Open();
         void Close();
     }
 }

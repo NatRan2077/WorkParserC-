@@ -55,27 +55,50 @@ namespace TFLaComp_1
         private void makeToolStripMenuItem_Click(object sender, EventArgs e)
         {
             // добавить Binding
-            _logic.Create(richTextBoxInput.Text);
-            richTextBoxInput.Text = "";
+            string text = richTextBoxInput.Text;
+            _logic.Create(ref text);
+            //richTextBoxInput.Text = "";
+            richTextBoxInput.Text = text;
             richTextBoxOutput.Text = "";
         }
 
         private void file_Click(object sender, EventArgs e)
         {
             // добавить Binding
-            _logic.Create(richTextBoxInput.Text);
-            richTextBoxInput.Text = "";
+            string text = richTextBoxInput.Text;
+            _logic.Create(ref text);
+            //richTextBoxInput.Text = "";
+            richTextBoxInput.Text = text;
             richTextBoxOutput.Text = "";
         }
 
         private void open_Click(object sender, EventArgs e)
         {
-            _logic.Open();
+            try
+            {
+                string? text = _logic.Open();
+                if (text == null)
+                    throw new FileLoadException("Ошибка открытия файла!");
+                richTextBoxInput.Text = text;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            _logic.Open();
+            try
+            {
+                string? text = _logic.Open();
+                if (text == null)
+                    throw new FileLoadException("Ошибка открытия файла!");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void save_Click(object sender, EventArgs e)
@@ -239,11 +262,27 @@ namespace TFLaComp_1
         {
             ////////////////////////////////////
             ///
-            DialogResult dr = MessageBox.Show("Сохранить внесенные изменения перед выходом?", "Сохранение", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
-            if (dr.HasFlag(DialogResult.Yes))
-                _logic.SaveAs(richTextBoxInput.Text);
-            else if (dr.HasFlag(DialogResult.No))
-                _logic.Close();
+            /*            DialogResult dr = MessageBox.Show("Сохранить внесенные изменения перед выходом?", "Сохранение", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+                        if (dr.HasFlag(DialogResult.Yes))
+                            _logic.SaveAs(richTextBoxInput.Text);
+                        else if (dr.HasFlag(DialogResult.No))
+                            _logic.Close();*/
+
+            DialogResult result = MessageBox.Show(
+                "Вы хотите сохранить перед выходом?",
+                "Подтверждение",
+                MessageBoxButtons.YesNoCancel,
+                MessageBoxIcon.Question);
+
+            if (result == DialogResult.Yes)
+            {
+                _logic.Save(richTextBoxInput.Text);
+            }
+            else if (result == DialogResult.No)
+            {
+                //_logic.Close();
+                Application.Exit();
+            }
         }
 
     }
