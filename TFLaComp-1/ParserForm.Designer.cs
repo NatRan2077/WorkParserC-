@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ParserForm));
             menuStrip1 = new MenuStrip();
             fileToolStripMenuItem = new ToolStripMenuItem();
@@ -69,6 +70,7 @@
             richTextBoxOutput = new RichTextBox();
             copy = new Button();
             helpProvider1 = new HelpProvider();
+            toolTip1 = new ToolTip(components);
             menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
@@ -276,11 +278,16 @@
             // 
             file.BackgroundImage = (Image)resources.GetObject("file.BackgroundImage");
             file.BackgroundImageLayout = ImageLayout.Zoom;
+            file.Cursor = Cursors.Hand;
             file.Location = new Point(11, 30);
             file.Margin = new Padding(3, 2, 3, 2);
             file.Name = "file";
+            helpProvider1.SetShowHelp(file, false);
+
             file.Size = new Size(77, 70);
             file.TabIndex = 1;
+            file.Tag = "";
+            toolTip1.SetToolTip(file, "Создать файл");
             file.UseVisualStyleBackColor = true;
             file.Click += file_Click;
             // 
@@ -288,11 +295,16 @@
             // 
             open.BackgroundImage = (Image)resources.GetObject("open.BackgroundImage");
             open.BackgroundImageLayout = ImageLayout.Zoom;
+            open.Cursor = Cursors.Hand;
             open.Location = new Point(95, 30);
             open.Margin = new Padding(3, 2, 3, 2);
             open.Name = "open";
+            helpProvider1.SetShowHelp(open, false);
+
             open.Size = new Size(77, 70);
             open.TabIndex = 2;
+            open.Tag = "";
+            toolTip1.SetToolTip(open, "Открыть файл");
             open.UseVisualStyleBackColor = true;
             open.Click += open_Click;
             // 
@@ -300,11 +312,16 @@
             // 
             save.BackgroundImage = (Image)resources.GetObject("save.BackgroundImage");
             save.BackgroundImageLayout = ImageLayout.Zoom;
+            save.Cursor = Cursors.Hand;
             save.Location = new Point(178, 30);
             save.Margin = new Padding(3, 2, 3, 2);
             save.Name = "save";
+            helpProvider1.SetShowHelp(save, false);
+
             save.Size = new Size(77, 70);
             save.TabIndex = 3;
+            save.Tag = "";
+            toolTip1.SetToolTip(save, "Сохранить");
             save.UseVisualStyleBackColor = true;
             save.Click += save_Click;
             // 
@@ -312,12 +329,17 @@
             // 
             start.BackgroundImage = (Image)resources.GetObject("start.BackgroundImage");
             start.BackgroundImageLayout = ImageLayout.Zoom;
+            start.Cursor = Cursors.Hand;
             start.Location = new Point(261, 30);
             start.Margin = new Padding(3, 2, 3, 2);
             start.Name = "start";
+            helpProvider1.SetShowHelp(start, false);
+
             start.Size = new Size(77, 70);
             start.TabIndex = 4;
+            start.Tag = "";
             start.Text = "start";
+            toolTip1.SetToolTip(start, "Запуск");
             start.UseVisualStyleBackColor = true;
             start.Click += start_Click;
             // 
@@ -325,11 +347,16 @@
             // 
             undo.BackgroundImage = (Image)resources.GetObject("undo.BackgroundImage");
             undo.BackgroundImageLayout = ImageLayout.Zoom;
+            undo.Cursor = Cursors.Hand;
             undo.Location = new Point(344, 30);
             undo.Margin = new Padding(3, 2, 3, 2);
             undo.Name = "undo";
+            helpProvider1.SetShowHelp(undo, false);
+
             undo.Size = new Size(77, 70);
             undo.TabIndex = 5;
+            undo.Tag = "";
+            toolTip1.SetToolTip(undo, "Отменить");
             undo.UseVisualStyleBackColor = true;
             undo.Click += undo_Click;
             // 
@@ -337,11 +364,16 @@
             // 
             redo.BackgroundImage = (Image)resources.GetObject("redo.BackgroundImage");
             redo.BackgroundImageLayout = ImageLayout.Zoom;
+            redo.Cursor = Cursors.Hand;
             redo.Location = new Point(427, 30);
             redo.Margin = new Padding(3, 2, 3, 2);
             redo.Name = "redo";
+            helpProvider1.SetShowHelp(redo, false);
+
             redo.Size = new Size(77, 70);
             redo.TabIndex = 6;
+            redo.Tag = "";
+            toolTip1.SetToolTip(redo, "Вернуть");
             redo.UseVisualStyleBackColor = true;
             redo.Click += redo_Click;
             // 
@@ -349,11 +381,16 @@
             // 
             cut.BackgroundImage = (Image)resources.GetObject("cut.BackgroundImage");
             cut.BackgroundImageLayout = ImageLayout.Zoom;
+            cut.Cursor = Cursors.Hand;
             cut.Location = new Point(510, 30);
             cut.Margin = new Padding(3, 2, 3, 2);
             cut.Name = "cut";
+            helpProvider1.SetShowHelp(cut, false);
+
             cut.Size = new Size(77, 70);
             cut.TabIndex = 7;
+            cut.Tag = "";
+            toolTip1.SetToolTip(cut, "Вырезать");
             cut.UseVisualStyleBackColor = true;
             cut.Click += cut_Click;
             // 
@@ -361,11 +398,16 @@
             // 
             paste.BackgroundImage = (Image)resources.GetObject("paste.BackgroundImage");
             paste.BackgroundImageLayout = ImageLayout.Zoom;
+            paste.Cursor = Cursors.Hand;
             paste.Location = new Point(593, 30);
             paste.Margin = new Padding(3, 2, 3, 2);
             paste.Name = "paste";
+            helpProvider1.SetShowHelp(paste, false);
+
             paste.Size = new Size(77, 70);
             paste.TabIndex = 8;
+            paste.Tag = "";
+            toolTip1.SetToolTip(paste, "Вставить");
             paste.UseVisualStyleBackColor = true;
             paste.Click += paste_Click;
             // 
@@ -393,11 +435,14 @@
             // 
             copy.BackgroundImage = (Image)resources.GetObject("copy.BackgroundImage");
             copy.BackgroundImageLayout = ImageLayout.Zoom;
+            copy.Cursor = Cursors.Hand;
+
             copy.Location = new Point(677, 30);
             copy.Margin = new Padding(3, 2, 3, 2);
             copy.Name = "copy";
             copy.Size = new Size(77, 70);
             copy.TabIndex = 11;
+            toolTip1.SetToolTip(copy, "Копировать");
             copy.UseVisualStyleBackColor = true;
             copy.Click += copy_Click;
             // 
@@ -436,14 +481,6 @@
         private ToolStripMenuItem textToolStripMenuItem;
         private ToolStripMenuItem StartToolStripMenuItem;
         private ToolStripMenuItem refToolStripMenuItem;
-        private Button file;
-        private Button open;
-        private Button save;
-        private Button start;
-        private Button undo;
-        private Button redo;
-        private Button cut;
-        private Button paste;
         private RichTextBox richTextBoxInput;
         private RichTextBox richTextBoxOutput;
         private Button copy;
@@ -470,5 +507,14 @@
         private ToolStripMenuItem callHelpToolStripMenuItem;
         private ToolStripMenuItem aboutCodeToolStripMenuItem;
         private HelpProvider helpProvider1;
+        internal Button file;
+        internal Button open;
+        internal Button save;
+        internal Button start;
+        internal Button undo;
+        internal Button redo;
+        internal Button cut;
+        internal Button paste;
+        private ToolTip toolTip1;
     }
 }
