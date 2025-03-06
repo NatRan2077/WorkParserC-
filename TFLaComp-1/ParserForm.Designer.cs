@@ -68,6 +68,7 @@
             richTextBoxInput = new RichTextBox();
             richTextBoxOutput = new RichTextBox();
             copy = new Button();
+            helpProvider1 = new HelpProvider();
             menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
@@ -77,8 +78,8 @@
             menuStrip1.Items.AddRange(new ToolStripItem[] { fileToolStripMenuItem, editingToolStripMenuItem, textToolStripMenuItem, StartToolStripMenuItem, refToolStripMenuItem });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
-            menuStrip1.Padding = new Padding(5, 2, 0, 2);
-            menuStrip1.Size = new Size(701, 24);
+            menuStrip1.Padding = new Padding(7, 3, 0, 3);
+            menuStrip1.Size = new Size(1001, 35);
             menuStrip1.TabIndex = 0;
             menuStrip1.Text = "menuStrip1";
             menuStrip1.ItemClicked += menuStrip1_ItemClicked;
@@ -87,176 +88,199 @@
             // 
             fileToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { makeToolStripMenuItem, openToolStripMenuItem, saveToolStripMenuItem, saveAssToolStripMenuItem, exitToolStripMenuItem });
             fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            fileToolStripMenuItem.Size = new Size(48, 20);
-            fileToolStripMenuItem.Text = "Фаил";
+            fileToolStripMenuItem.Size = new Size(69, 29);
+            fileToolStripMenuItem.Text = "Файл";
             // 
             // makeToolStripMenuItem
             // 
             makeToolStripMenuItem.Name = "makeToolStripMenuItem";
-            makeToolStripMenuItem.Size = new Size(153, 22);
+            makeToolStripMenuItem.Size = new Size(270, 34);
             makeToolStripMenuItem.Text = "Создать";
+            makeToolStripMenuItem.Click += makeToolStripMenuItem_Click;
             // 
             // openToolStripMenuItem
             // 
             openToolStripMenuItem.Name = "openToolStripMenuItem";
-            openToolStripMenuItem.Size = new Size(153, 22);
+            openToolStripMenuItem.Size = new Size(270, 34);
             openToolStripMenuItem.Text = "Открыть";
+            openToolStripMenuItem.Click += openToolStripMenuItem_Click;
             // 
             // saveToolStripMenuItem
             // 
             saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            saveToolStripMenuItem.Size = new Size(153, 22);
+            saveToolStripMenuItem.Size = new Size(270, 34);
             saveToolStripMenuItem.Text = "Сохранить";
+            saveToolStripMenuItem.Click += saveToolStripMenuItem_Click;
             // 
             // saveAssToolStripMenuItem
             // 
             saveAssToolStripMenuItem.Name = "saveAssToolStripMenuItem";
-            saveAssToolStripMenuItem.Size = new Size(153, 22);
+            saveAssToolStripMenuItem.Size = new Size(270, 34);
             saveAssToolStripMenuItem.Text = "Сохранить как";
+            saveAssToolStripMenuItem.Click += saveAssToolStripMenuItem_Click;
             // 
             // exitToolStripMenuItem
             // 
             exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            exitToolStripMenuItem.Size = new Size(153, 22);
+            exitToolStripMenuItem.Size = new Size(270, 34);
             exitToolStripMenuItem.Text = "Выход";
+            exitToolStripMenuItem.Click += exitToolStripMenuItem_Click;
             // 
             // editingToolStripMenuItem
             // 
             editingToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { undoToolStripMenuItem, redoToolStripMenuItem, cutToolStripMenuItem, copyToolStripMenuItem, pasteToolStripMenuItem, deleteToolStripMenuItem, pasteAllToolStripMenuItem });
             editingToolStripMenuItem.Name = "editingToolStripMenuItem";
-            editingToolStripMenuItem.Size = new Size(59, 20);
+            editingToolStripMenuItem.Size = new Size(89, 29);
             editingToolStripMenuItem.Text = "Правка";
             // 
             // undoToolStripMenuItem
             // 
             undoToolStripMenuItem.Name = "undoToolStripMenuItem";
-            undoToolStripMenuItem.Size = new Size(148, 22);
+            undoToolStripMenuItem.Size = new Size(223, 34);
             undoToolStripMenuItem.Text = "Отменить";
+            undoToolStripMenuItem.Click += undoToolStripMenuItem_Click;
             // 
             // redoToolStripMenuItem
             // 
             redoToolStripMenuItem.Name = "redoToolStripMenuItem";
-            redoToolStripMenuItem.Size = new Size(148, 22);
+            redoToolStripMenuItem.Size = new Size(223, 34);
             redoToolStripMenuItem.Text = "Повторить";
+            redoToolStripMenuItem.Click += redoToolStripMenuItem_Click;
             // 
             // cutToolStripMenuItem
             // 
             cutToolStripMenuItem.Name = "cutToolStripMenuItem";
-            cutToolStripMenuItem.Size = new Size(148, 22);
+            cutToolStripMenuItem.Size = new Size(223, 34);
             cutToolStripMenuItem.Text = "Вырезать";
+            cutToolStripMenuItem.Click += cutToolStripMenuItem_Click;
             // 
             // copyToolStripMenuItem
             // 
             copyToolStripMenuItem.Name = "copyToolStripMenuItem";
-            copyToolStripMenuItem.Size = new Size(148, 22);
+            copyToolStripMenuItem.Size = new Size(223, 34);
             copyToolStripMenuItem.Text = "Копировать";
+            copyToolStripMenuItem.Click += copyToolStripMenuItem_Click;
             // 
             // pasteToolStripMenuItem
             // 
             pasteToolStripMenuItem.Name = "pasteToolStripMenuItem";
-            pasteToolStripMenuItem.Size = new Size(148, 22);
+            pasteToolStripMenuItem.Size = new Size(223, 34);
             pasteToolStripMenuItem.Text = "Вставить";
+            pasteToolStripMenuItem.Click += pasteToolStripMenuItem_Click;
             // 
             // deleteToolStripMenuItem
             // 
             deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
-            deleteToolStripMenuItem.Size = new Size(148, 22);
+            deleteToolStripMenuItem.Size = new Size(223, 34);
             deleteToolStripMenuItem.Text = "Удалить";
+            deleteToolStripMenuItem.Click += deleteToolStripMenuItem_Click;
             // 
             // pasteAllToolStripMenuItem
             // 
             pasteAllToolStripMenuItem.Name = "pasteAllToolStripMenuItem";
-            pasteAllToolStripMenuItem.Size = new Size(148, 22);
+            pasteAllToolStripMenuItem.Size = new Size(223, 34);
             pasteAllToolStripMenuItem.Text = "Выделить все";
+            pasteAllToolStripMenuItem.Click += pasteAllToolStripMenuItem_Click;
             // 
             // textToolStripMenuItem
             // 
             textToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { expToolStripMenuItem, grammarToolStripMenuItem, classificationgrammarClassToolStripMenuItem, analysismethodToolStripMenuItem, diagnosticsNeutralizationToolStripMenuItem, explToolStripMenuItem, bibliographyToolStripMenuItem, sourceCodeToolStripMenuItem });
             textToolStripMenuItem.Name = "textToolStripMenuItem";
-            textToolStripMenuItem.Size = new Size(49, 20);
+            textToolStripMenuItem.Size = new Size(70, 29);
             textToolStripMenuItem.Text = "Текст";
             // 
             // expToolStripMenuItem
             // 
             expToolStripMenuItem.Name = "expToolStripMenuItem";
-            expToolStripMenuItem.Size = new Size(288, 22);
+            expToolStripMenuItem.Size = new Size(428, 34);
             expToolStripMenuItem.Text = "Постановка задачи";
+            expToolStripMenuItem.Click += expToolStripMenuItem_Click;
             // 
             // grammarToolStripMenuItem
             // 
             grammarToolStripMenuItem.Name = "grammarToolStripMenuItem";
-            grammarToolStripMenuItem.Size = new Size(288, 22);
+            grammarToolStripMenuItem.Size = new Size(428, 34);
             grammarToolStripMenuItem.Text = "Грамматика";
+            grammarToolStripMenuItem.Click += grammarToolStripMenuItem_Click;
             // 
             // classificationgrammarClassToolStripMenuItem
             // 
             classificationgrammarClassToolStripMenuItem.Name = "classificationgrammarClassToolStripMenuItem";
-            classificationgrammarClassToolStripMenuItem.Size = new Size(288, 22);
+            classificationgrammarClassToolStripMenuItem.Size = new Size(428, 34);
             classificationgrammarClassToolStripMenuItem.Text = "Классификация грамматики";
+            classificationgrammarClassToolStripMenuItem.Click += classificationgrammarClassToolStripMenuItem_Click;
             // 
             // analysismethodToolStripMenuItem
             // 
             analysismethodToolStripMenuItem.Name = "analysismethodToolStripMenuItem";
-            analysismethodToolStripMenuItem.Size = new Size(288, 22);
+            analysismethodToolStripMenuItem.Size = new Size(428, 34);
             analysismethodToolStripMenuItem.Text = "Метод анализа";
+            analysismethodToolStripMenuItem.Click += analysismethodToolStripMenuItem_Click;
             // 
             // diagnosticsNeutralizationToolStripMenuItem
             // 
             diagnosticsNeutralizationToolStripMenuItem.Name = "diagnosticsNeutralizationToolStripMenuItem";
-            diagnosticsNeutralizationToolStripMenuItem.Size = new Size(288, 22);
+            diagnosticsNeutralizationToolStripMenuItem.Size = new Size(428, 34);
             diagnosticsNeutralizationToolStripMenuItem.Text = "Диагностика и нейтрализация ошибок";
+            diagnosticsNeutralizationToolStripMenuItem.Click += diagnosticsNeutralizationToolStripMenuItem_Click;
             // 
             // explToolStripMenuItem
             // 
             explToolStripMenuItem.Name = "explToolStripMenuItem";
-            explToolStripMenuItem.Size = new Size(288, 22);
+            explToolStripMenuItem.Size = new Size(428, 34);
             explToolStripMenuItem.Text = "Тестовый пример";
+            explToolStripMenuItem.Click += explToolStripMenuItem_Click;
             // 
             // bibliographyToolStripMenuItem
             // 
             bibliographyToolStripMenuItem.Name = "bibliographyToolStripMenuItem";
-            bibliographyToolStripMenuItem.Size = new Size(288, 22);
+            bibliographyToolStripMenuItem.Size = new Size(428, 34);
             bibliographyToolStripMenuItem.Text = "Список литературы";
+            bibliographyToolStripMenuItem.Click += bibliographyToolStripMenuItem_Click;
             // 
             // sourceCodeToolStripMenuItem
             // 
             sourceCodeToolStripMenuItem.Name = "sourceCodeToolStripMenuItem";
-            sourceCodeToolStripMenuItem.Size = new Size(288, 22);
+            sourceCodeToolStripMenuItem.Size = new Size(428, 34);
             sourceCodeToolStripMenuItem.Text = "Исходный код программы";
+            sourceCodeToolStripMenuItem.Click += sourceCodeToolStripMenuItem_Click;
             // 
             // StartToolStripMenuItem
             // 
             StartToolStripMenuItem.Name = "StartToolStripMenuItem";
-            StartToolStripMenuItem.Size = new Size(46, 20);
+            StartToolStripMenuItem.Size = new Size(67, 29);
             StartToolStripMenuItem.Text = "Пуск";
+            StartToolStripMenuItem.Click += StartToolStripMenuItem_Click;
             // 
             // refToolStripMenuItem
             // 
             refToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { callHelpToolStripMenuItem, aboutCodeToolStripMenuItem });
             refToolStripMenuItem.Name = "refToolStripMenuItem";
-            refToolStripMenuItem.Size = new Size(65, 20);
+            refToolStripMenuItem.Size = new Size(97, 29);
             refToolStripMenuItem.Text = "Справка";
             // 
             // callHelpToolStripMenuItem
             // 
             callHelpToolStripMenuItem.Name = "callHelpToolStripMenuItem";
-            callHelpToolStripMenuItem.Size = new Size(156, 22);
+            callHelpToolStripMenuItem.Size = new Size(238, 34);
             callHelpToolStripMenuItem.Text = "Вызов справки";
+            callHelpToolStripMenuItem.Click += callHelpToolStripMenuItem_Click;
             // 
             // aboutCodeToolStripMenuItem
             // 
             aboutCodeToolStripMenuItem.Name = "aboutCodeToolStripMenuItem";
-            aboutCodeToolStripMenuItem.Size = new Size(156, 22);
+            aboutCodeToolStripMenuItem.Size = new Size(238, 34);
             aboutCodeToolStripMenuItem.Text = "О программе";
+            aboutCodeToolStripMenuItem.Click += aboutCodeToolStripMenuItem_Click;
             // 
             // file
             // 
             file.BackgroundImage = (Image)resources.GetObject("file.BackgroundImage");
             file.BackgroundImageLayout = ImageLayout.Zoom;
-            file.Location = new Point(10, 23);
-            file.Margin = new Padding(3, 2, 3, 2);
+            file.Location = new Point(14, 38);
+            file.Margin = new Padding(4, 3, 4, 3);
             file.Name = "file";
-            file.Size = new Size(67, 52);
+            file.Size = new Size(96, 87);
             file.TabIndex = 1;
             file.UseVisualStyleBackColor = true;
             file.Click += file_Click;
@@ -265,95 +289,103 @@
             // 
             open.BackgroundImage = (Image)resources.GetObject("open.BackgroundImage");
             open.BackgroundImageLayout = ImageLayout.Zoom;
-            open.Location = new Point(83, 23);
-            open.Margin = new Padding(3, 2, 3, 2);
+            open.Location = new Point(119, 38);
+            open.Margin = new Padding(4, 3, 4, 3);
             open.Name = "open";
-            open.Size = new Size(67, 52);
+            open.Size = new Size(96, 87);
             open.TabIndex = 2;
             open.UseVisualStyleBackColor = true;
+            open.Click += open_Click;
             // 
             // save
             // 
             save.BackgroundImage = (Image)resources.GetObject("save.BackgroundImage");
             save.BackgroundImageLayout = ImageLayout.Zoom;
-            save.Location = new Point(156, 23);
-            save.Margin = new Padding(3, 2, 3, 2);
+            save.Location = new Point(223, 38);
+            save.Margin = new Padding(4, 3, 4, 3);
             save.Name = "save";
-            save.Size = new Size(67, 52);
+            save.Size = new Size(96, 87);
             save.TabIndex = 3;
             save.UseVisualStyleBackColor = true;
+            save.Click += save_Click;
             // 
             // start
             // 
             start.BackgroundImage = (Image)resources.GetObject("start.BackgroundImage");
             start.BackgroundImageLayout = ImageLayout.Zoom;
-            start.Location = new Point(228, 23);
-            start.Margin = new Padding(3, 2, 3, 2);
+            start.Location = new Point(326, 38);
+            start.Margin = new Padding(4, 3, 4, 3);
             start.Name = "start";
-            start.Size = new Size(67, 52);
+            start.Size = new Size(96, 87);
             start.TabIndex = 4;
             start.Text = "start";
             start.UseVisualStyleBackColor = true;
+            start.Click += start_Click;
             // 
             // undo
             // 
             undo.BackgroundImage = (Image)resources.GetObject("undo.BackgroundImage");
             undo.BackgroundImageLayout = ImageLayout.Zoom;
-            undo.Location = new Point(301, 23);
-            undo.Margin = new Padding(3, 2, 3, 2);
+            undo.Location = new Point(430, 38);
+            undo.Margin = new Padding(4, 3, 4, 3);
             undo.Name = "undo";
-            undo.Size = new Size(67, 52);
+            undo.Size = new Size(96, 87);
             undo.TabIndex = 5;
             undo.UseVisualStyleBackColor = true;
+            undo.Click += undo_Click;
             // 
             // redo
             // 
             redo.BackgroundImage = (Image)resources.GetObject("redo.BackgroundImage");
             redo.BackgroundImageLayout = ImageLayout.Zoom;
-            redo.Location = new Point(374, 23);
-            redo.Margin = new Padding(3, 2, 3, 2);
+            redo.Location = new Point(534, 38);
+            redo.Margin = new Padding(4, 3, 4, 3);
             redo.Name = "redo";
-            redo.Size = new Size(67, 52);
+            redo.Size = new Size(96, 87);
             redo.TabIndex = 6;
             redo.UseVisualStyleBackColor = true;
+            redo.Click += redo_Click;
             // 
             // cut
             // 
             cut.BackgroundImage = (Image)resources.GetObject("cut.BackgroundImage");
             cut.BackgroundImageLayout = ImageLayout.Zoom;
-            cut.Location = new Point(446, 23);
-            cut.Margin = new Padding(3, 2, 3, 2);
+            cut.Location = new Point(637, 38);
+            cut.Margin = new Padding(4, 3, 4, 3);
             cut.Name = "cut";
-            cut.Size = new Size(67, 52);
+            cut.Size = new Size(96, 87);
             cut.TabIndex = 7;
             cut.UseVisualStyleBackColor = true;
+            cut.Click += cut_Click;
             // 
             // paste
             // 
             paste.BackgroundImage = (Image)resources.GetObject("paste.BackgroundImage");
             paste.BackgroundImageLayout = ImageLayout.Zoom;
-            paste.Location = new Point(519, 23);
-            paste.Margin = new Padding(3, 2, 3, 2);
+            paste.Location = new Point(741, 38);
+            paste.Margin = new Padding(4, 3, 4, 3);
             paste.Name = "paste";
-            paste.Size = new Size(67, 52);
+            paste.Size = new Size(96, 87);
             paste.TabIndex = 8;
             paste.UseVisualStyleBackColor = true;
+            paste.Click += paste_Click;
             // 
             // richTextBoxInput
             // 
-            richTextBoxInput.Location = new Point(10, 80);
-            richTextBoxInput.Margin = new Padding(3, 2, 3, 2);
+            richTextBoxInput.Location = new Point(14, 133);
+            richTextBoxInput.Margin = new Padding(4, 3, 4, 3);
             richTextBoxInput.Name = "richTextBoxInput";
-            richTextBoxInput.Size = new Size(681, 216);
+            richTextBoxInput.Size = new Size(971, 357);
             richTextBoxInput.TabIndex = 9;
             richTextBoxInput.Text = "";
             // 
             // richTextBoxOutput
             // 
-            richTextBoxOutput.Location = new Point(10, 327);
-            richTextBoxOutput.Margin = new Padding(3, 2, 3, 2);
+            richTextBoxOutput.Location = new Point(14, 545);
+            richTextBoxOutput.Margin = new Padding(4, 3, 4, 3);
             richTextBoxOutput.Name = "richTextBoxOutput";
-            richTextBoxOutput.Size = new Size(681, 216);
+            richTextBoxOutput.ReadOnly = true;
+            richTextBoxOutput.Size = new Size(971, 357);
             richTextBoxOutput.TabIndex = 10;
             richTextBoxOutput.Text = "";
             // 
@@ -361,18 +393,19 @@
             // 
             copy.BackgroundImage = (Image)resources.GetObject("copy.BackgroundImage");
             copy.BackgroundImageLayout = ImageLayout.Zoom;
-            copy.Location = new Point(592, 23);
-            copy.Margin = new Padding(3, 2, 3, 2);
+            copy.Location = new Point(846, 38);
+            copy.Margin = new Padding(4, 3, 4, 3);
             copy.Name = "copy";
-            copy.Size = new Size(67, 52);
+            copy.Size = new Size(96, 87);
             copy.TabIndex = 11;
             copy.UseVisualStyleBackColor = true;
+            copy.Click += copy_Click;
             // 
             // ParserForm
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(701, 598);
+            ClientSize = new Size(1001, 997);
             Controls.Add(copy);
             Controls.Add(richTextBoxOutput);
             Controls.Add(richTextBoxInput);
@@ -386,7 +419,7 @@
             Controls.Add(file);
             Controls.Add(menuStrip1);
             MainMenuStrip = menuStrip1;
-            Margin = new Padding(3, 2, 3, 2);
+            Margin = new Padding(4, 3, 4, 3);
             Name = "ParserForm";
             Text = "Парсер";
             menuStrip1.ResumeLayout(false);
@@ -436,5 +469,6 @@
         private ToolStripMenuItem sourceCodeToolStripMenuItem;
         private ToolStripMenuItem callHelpToolStripMenuItem;
         private ToolStripMenuItem aboutCodeToolStripMenuItem;
+        private HelpProvider helpProvider1;
     }
 }
