@@ -283,6 +283,7 @@
             file.Margin = new Padding(3, 2, 3, 2);
             file.Name = "file";
             helpProvider1.SetShowHelp(file, false);
+
             file.Size = new Size(77, 70);
             file.TabIndex = 1;
             file.Tag = "";
@@ -299,6 +300,7 @@
             open.Margin = new Padding(3, 2, 3, 2);
             open.Name = "open";
             helpProvider1.SetShowHelp(open, false);
+
             open.Size = new Size(77, 70);
             open.TabIndex = 2;
             open.Tag = "";
@@ -315,6 +317,7 @@
             save.Margin = new Padding(3, 2, 3, 2);
             save.Name = "save";
             helpProvider1.SetShowHelp(save, false);
+
             save.Size = new Size(77, 70);
             save.TabIndex = 3;
             save.Tag = "";
@@ -331,6 +334,7 @@
             start.Margin = new Padding(3, 2, 3, 2);
             start.Name = "start";
             helpProvider1.SetShowHelp(start, false);
+
             start.Size = new Size(77, 70);
             start.TabIndex = 4;
             start.Tag = "";
@@ -348,6 +352,7 @@
             undo.Margin = new Padding(3, 2, 3, 2);
             undo.Name = "undo";
             helpProvider1.SetShowHelp(undo, false);
+
             undo.Size = new Size(77, 70);
             undo.TabIndex = 5;
             undo.Tag = "";
@@ -364,6 +369,7 @@
             redo.Margin = new Padding(3, 2, 3, 2);
             redo.Name = "redo";
             helpProvider1.SetShowHelp(redo, false);
+
             redo.Size = new Size(77, 70);
             redo.TabIndex = 6;
             redo.Tag = "";
@@ -380,6 +386,7 @@
             cut.Margin = new Padding(3, 2, 3, 2);
             cut.Name = "cut";
             helpProvider1.SetShowHelp(cut, false);
+
             cut.Size = new Size(77, 70);
             cut.TabIndex = 7;
             cut.Tag = "";
@@ -396,6 +403,7 @@
             paste.Margin = new Padding(3, 2, 3, 2);
             paste.Name = "paste";
             helpProvider1.SetShowHelp(paste, false);
+
             paste.Size = new Size(77, 70);
             paste.TabIndex = 8;
             paste.Tag = "";
@@ -411,6 +419,7 @@
             richTextBoxInput.Size = new Size(778, 286);
             richTextBoxInput.TabIndex = 9;
             richTextBoxInput.Text = "";
+            richTextBoxInput.KeyDown += richTextBoxInput_KeyDown;
             // 
             // richTextBoxOutput
             // 
@@ -427,6 +436,7 @@
             copy.BackgroundImage = (Image)resources.GetObject("copy.BackgroundImage");
             copy.BackgroundImageLayout = ImageLayout.Zoom;
             copy.Cursor = Cursors.Hand;
+
             copy.Location = new Point(677, 30);
             copy.Margin = new Padding(3, 2, 3, 2);
             copy.Name = "copy";

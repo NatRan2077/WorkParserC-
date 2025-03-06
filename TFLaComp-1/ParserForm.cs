@@ -49,7 +49,7 @@ namespace TFLaComp_1
 
         private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
-            
+
         }
 
         private void makeToolStripMenuItem_Click(object sender, EventArgs e)
@@ -285,5 +285,9 @@ namespace TFLaComp_1
             }
         }
 
+        private void richTextBoxInput_KeyDown(object sender, KeyEventArgs e)
+        {
+            _edit.SaveAction();
+        }
     }
 }
