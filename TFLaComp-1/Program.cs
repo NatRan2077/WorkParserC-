@@ -1,3 +1,5 @@
+using TFLaComp_1.RegExParser;
+
 namespace TFLaComp_1
 {
     internal static class Program
@@ -13,6 +15,9 @@ namespace TFLaComp_1
             ApplicationConfiguration.Initialize();
             Application.Run(new ParserForm());
             //Application.Run(new EditForm());
+            //CardParser cardParser = new CardParser();
+            //string text = "1234lkdfg 2222 2333 4444 5555 2222";
+            //List<CardDTO> list = cardParser.Parse(text);
         }
     }
 }
