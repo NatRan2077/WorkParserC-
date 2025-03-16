@@ -12,6 +12,8 @@ namespace TFLaComp_1
 
         private IParserHelpProvider _helpProvider;
 
+        private bool isTextChanged = false;
+
         public ParserForm()
         {
             InitializeComponent();
@@ -45,6 +47,8 @@ namespace TFLaComp_1
 
             // добавить какой-то Binding?
             helpProvider1 = _helpProvider.HelpProvider;
+
+            richTextBoxInput.TextChanged += richTextBoxInput_TextChanged;
         }
 
         private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
@@ -64,36 +68,67 @@ namespace TFLaComp_1
 
         private void file_Click(object sender, EventArgs e)
         {
-            // добавить Binding
-            string text = richTextBoxInput.Text;
-            _logic.Create(ref text);
-            //richTextBoxInput.Text = "";
-            richTextBoxInput.Text = text;
-            richTextBoxOutput.Text = "";
+            if (ConfirmSaveChanges())
+            {
+                // добавить Binding
+                string text = richTextBoxInput.Text;
+                _logic.Create(ref text);
+                //richTextBoxInput.Text = "";
+                richTextBoxInput.Text = text;
+                richTextBoxOutput.Text = "";
+            }
         }
 
         private void open_Click(object sender, EventArgs e)
         {
-            try
+            if (ConfirmSaveChanges())
             {
-                string? text = _logic.Open();
-                if (text == null)
-                    throw new FileLoadException("Ошибка открытия файла!");
-                richTextBoxInput.Text = text;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                LoadFile();
             }
         }
 
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (ConfirmSaveChanges())
+            {
+                LoadFile();
+            }
+        }
+
+        private bool ConfirmSaveChanges()
+        {
+            if (!isTextChanged) return true; // Если изменений нет, просто продолжаем.
+
+            DialogResult result = MessageBox.Show(
+                "Сохранить изменения перед открытием нового файла?",
+                "Подтверждение",
+                MessageBoxButtons.YesNoCancel,
+                MessageBoxIcon.Warning);
+
+            if (result == DialogResult.Yes)
+            {
+                _logic.Save(richTextBoxInput.Text);
+                isTextChanged = false;
+                return true;
+            }
+            else if (result == DialogResult.No)
+            {
+                return true;
+            }
+
+            return false; // Отмена операции
+        }
+
+        private void LoadFile()
+        {
             try
             {
                 string? text = _logic.Open();
                 if (text == null)
                     throw new FileLoadException("Ошибка открытия файла!");
+
+                richTextBoxInput.Text = text;
+                isTextChanged = false; // Сбрасываем флаг изменений
             }
             catch (Exception ex)
             {
@@ -289,5 +324,12 @@ namespace TFLaComp_1
         {
             _edit.SaveUndo();
         }
+
+        private void richTextBoxInput_TextChanged(object sender, EventArgs e)
+        {
+            isTextChanged = true;
+
+        }
+
     }
 }
