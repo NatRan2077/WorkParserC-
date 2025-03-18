@@ -153,6 +153,7 @@ namespace TFLaComp_1
 
         private void start_Click(object sender, EventArgs e)
         {
+            _logic.WriteToLog();
             MessageBox.Show("Нажат старт");
         }
         private void StartToolStripMenuItem_Click(object sender, EventArgs e)
@@ -331,5 +332,14 @@ namespace TFLaComp_1
 
         }
 
+        private void richTextBoxOutput_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void richTextBoxInput_TextChanged_1(object sender, EventArgs e)
+        {
+
+        }
     }
 }

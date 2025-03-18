@@ -1,4 +1,6 @@
-﻿namespace TFLaComp_1.Functional
+﻿using System.Reflection.Metadata;
+
+namespace TFLaComp_1.Functional
 {
     public class Edit : IEdit
     {
@@ -9,6 +11,8 @@
         private Stack<string> _redoText;
 
         private string _copiedText;
+
+        private string _logFilePath = "log.txt";
 
         public Edit(RichTextBox richTextBox)
         {
@@ -117,6 +121,21 @@
             }
 
             _undoText.Push(_richTextBox.Text);
+        }
+
+
+
+        public void LogCurrentText(string filename)
+        {
+            try
+            {
+                string logEntry = $"{DateTime.Now}: {_richTextBox.Text}{Environment.NewLine}";
+                File.AppendAllText(filename, logEntry);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка при записи в лог-файл: {ex.Message}");
+            }
         }
     }
 }
