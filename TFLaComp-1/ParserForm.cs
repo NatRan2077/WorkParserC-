@@ -342,14 +342,6 @@ namespace TFLaComp_1
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ////////////////////////////////////
-            ///
-            /*            DialogResult dr = MessageBox.Show("Сохранить внесенные изменения перед выходом?", "Сохранение", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
-                        if (dr.HasFlag(DialogResult.Yes))
-                            _logic.SaveAs(richTextBoxInput.Text);
-                        else if (dr.HasFlag(DialogResult.No))
-                            _logic.Close();*/
-
             DialogResult result = MessageBox.Show(
                 "Вы хотите сохранить перед выходом?",
                 "Подтверждение",
@@ -369,7 +361,28 @@ namespace TFLaComp_1
 
         private void richTextBoxInput_KeyDown(object sender, KeyEventArgs e)
         {
-            _edit.SaveUndo();
+            if (e.Control && e.KeyCode == Keys.Z)
+            {
+                _edit.Undo();
+                e.SuppressKeyPress = true;
+            }
+            else if (e.Control && e.KeyCode == Keys.Y)
+            {
+                _edit.Redo();
+                e.SuppressKeyPress = true;
+            }
+            else if (e.Control && e.KeyCode == Keys.S)
+            {
+                _logic.Save(richTextBoxInput.Text);
+                e.SuppressKeyPress = true;
+            }
+            else if (e.Control && e.KeyCode == Keys.O)
+            {
+                _logic.Open();
+                e.SuppressKeyPress = true;
+            }
+            else
+                _edit.SaveUndo();
         }
 
         private void richTextBoxInput_TextChanged(object sender, EventArgs e)
