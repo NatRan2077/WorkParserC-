@@ -8,7 +8,7 @@ using static System.Net.Mime.MediaTypeNames;
 
 namespace TFLaComp_1.RegExParser
 {
-    internal class CardParser
+    public class CardParser
     {
         public List<CardDTO> Parse(string input) {
             List<CardDTO> cards = new List<CardDTO>();

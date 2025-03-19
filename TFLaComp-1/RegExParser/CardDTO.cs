@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TFLaComp_1.RegExParser
 {
-    internal class CardDTO
+    public class CardDTO
     {
         public string NumberCard { get; set; }
         public int IndexStart { get; set; }

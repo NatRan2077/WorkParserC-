@@ -2,6 +2,7 @@ using System.Windows.Forms;
 using TFLaComp_1.Functional;
 using TFLaComp_1.ParserHelp;
 using TFLaComp_1.RegExParser;
+using TFLaComp_1.ResultLog;
 
 namespace TFLaComp_1
 {
@@ -13,6 +14,9 @@ namespace TFLaComp_1
 
         private IParserHelpProvider _helpProvider;
 
+        private ISaveResult _saveResult;
+
+
         private bool isTextChanged = false;
 
         public ParserForm()
@@ -21,12 +25,12 @@ namespace TFLaComp_1
 
 
             this.HelpButton = true;
-
+            _saveResult = new SaveResult();
             _edit = new Edit(richTextBoxInput);
             _logic = new FileLogic();
-            //_helpProvider = new ParserHelpProvider($"\\ParserHelp\\res\\parserHelpProvider.chm");
-            //helpProvider1 = _helpProvider.HelpProvider;
-            //helpProvider1.HelpNamespace = $"ParserHelp\\res\\parserHelpProvider.chm";
+        //_helpProvider = new ParserHelpProvider($"\\ParserHelp\\res\\parserHelpProvider.chm");
+        //helpProvider1 = _helpProvider.HelpProvider;
+        //helpProvider1.HelpNamespace = $"ParserHelp\\res\\parserHelpProvider.chm";
 
 
             _helpProvider = new ParserHelpProvider();
@@ -195,6 +199,7 @@ namespace TFLaComp_1
             var parser = new CardParser();
             var results = parser.Parse(richTextBoxInput.Text);
             HighlightResults(results);
+            _saveResult.WriteToLog(results);
         }
 
         private void start_Click(object sender, EventArgs e)
