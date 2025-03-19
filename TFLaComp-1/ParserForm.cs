@@ -337,14 +337,6 @@ namespace TFLaComp_1
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ////////////////////////////////////
-            ///
-            /*            DialogResult dr = MessageBox.Show("Сохранить внесенные изменения перед выходом?", "Сохранение", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
-                        if (dr.HasFlag(DialogResult.Yes))
-                            _logic.SaveAs(richTextBoxInput.Text);
-                        else if (dr.HasFlag(DialogResult.No))
-                            _logic.Close();*/
-
             DialogResult result = MessageBox.Show(
                 "Вы хотите сохранить перед выходом?",
                 "Подтверждение",
@@ -394,6 +386,7 @@ namespace TFLaComp_1
                 _edit.Paste();
                 e.SuppressKeyPress = true;
             }
+
             else if (e.Control && e.KeyCode == Keys.S)
             {
                 _logic.Save(richTextBoxInput.Text);
