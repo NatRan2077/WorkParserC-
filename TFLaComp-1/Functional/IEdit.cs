@@ -16,5 +16,6 @@ namespace TFLaComp_1.Functional
         void Delete();
         void SelectAll();
         void SaveUndo();
+        
     }
 }

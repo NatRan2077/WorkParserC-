@@ -3,12 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace TFLaComp_1
 {
     public class FileLogic : IFileLogic
     {
         private string currentFilePath = string.Empty;
+
+        private RichTextBox _richTextBoxOutput;
+
+        private string _logFilePath = "log.txt";
 
         public void Create(ref string text)
         {
@@ -77,7 +82,30 @@ namespace TFLaComp_1
             //Application.Exit();
         }
 
+        public void WriteToLog()
+        {
+            try
+            {
+                string logEntry = $"{DateTime.Now}: {_richTextBoxOutput.Text}{Environment.NewLine}";
+                File.AppendAllText(_logFilePath, logEntry);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка при записи в лог-файл: {ex.Message}");
+            }
+        }
 
-
+        public void LogCurrentText(string filename)
+        {
+            try
+            {
+                string logEntry = $"{DateTime.Now}: {_richTextBoxOutput.Text}{Environment.NewLine}";
+                File.AppendAllText(filename, logEntry);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка при записи в лог-файл: {ex.Message}");
+            }
+        }
     }
 }
