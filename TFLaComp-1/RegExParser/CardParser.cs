@@ -13,10 +13,10 @@ namespace TFLaComp_1.RegExParser
         public List<CardDTO> Parse(string input) {
             List<CardDTO> cards = new List<CardDTO>();
 
-            string patternWithout = "(2|4|5)\\d{15}";
-            string patternWithSapcess = "(2|4|5)\\d{3}( \\d{4}){3}";
+            string patternWithout = "\\d{16}";
+            string patternWithSpacess = "\\d{4}( \\d{4}){3}";
             //пробел перед началом добавить
-            string pattern = @"(^| )((" + patternWithout + ")" + "|" + "(" + patternWithSapcess + "))($| )";
+            string pattern = @"(^| )((" + patternWithout + ")" + "|" + "(" + patternWithSpacess + "))($| )";
 
             Match match = Regex.Match(input, pattern);
             while (match.Success)

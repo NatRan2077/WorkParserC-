@@ -10,15 +10,15 @@ namespace TFLaComp_1
 {
     internal class AnalyzerCard
     {
-        private readonly List<CardDTO> _card;
+        private readonly List<CardDTO> _cards;
 
 
         private static readonly Dictionary<string, string> PaymentSystems = new()
         {
-            { "^4", "Visa" },
-            { "^5", "MasterCard" },
-            { "^6", "UnionPay" },
-            { "^22", "Мир" }
+            { "4", "Visa" },
+            { "5", "MasterCard" },
+            { "6", "UnionPay" },
+            { "22", "Мир" }
         };
 
         private static readonly Dictionary<string, string> BankCodes = new()
@@ -31,9 +31,9 @@ namespace TFLaComp_1
         };
 
 
-        public AnalyzerCard(List<CardDTO> card) 
+        public AnalyzerCard(List<CardDTO> cards) 
         {
-            _card = card;
+            _cards = cards;
         }
 
         private string GetPaymentSystem(CardDTO card)
@@ -64,7 +64,7 @@ namespace TFLaComp_1
 
             List<FullCardDTO> fullCards = new List<FullCardDTO>();
 
-            foreach (CardDTO card in _card) 
+            foreach (CardDTO card in _cards) 
             {
                 FullCardDTO fullCardDTO = new FullCardDTO(card, GetPaymentSystem(card), GetBankCode(card));
                 fullCards.Add(fullCardDTO);
