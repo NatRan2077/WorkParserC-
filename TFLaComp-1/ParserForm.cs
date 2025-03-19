@@ -161,29 +161,8 @@ namespace TFLaComp_1
             foreach (var card in cards)
             {
                 richTextBoxInput.Select(card.IndexStart, card.IndexEnd - card.IndexStart + 1);
-                switch (card.NumberCard[0])
-                {
-                    case '2':  // Mir
-                        {
-                            richTextBoxInput.SelectionColor = Color.Green;
-                        }
-                        break;
-                    case '4':  // Visa
-                        {
-                            richTextBoxInput.SelectionColor = Color.Blue;
-                        }
-                        break;
-                    case '5':  // MasterCard
-                        {
-                            richTextBoxInput.SelectionColor = Color.OrangeRed;
-                        }
-                        break;
-                    default:
-                        {
-                            richTextBoxInput.SelectionColor = Color.Purple;
-                        }
-                        break;
-                }
+
+                richTextBoxInput.SelectionColor = Color.Green;
                 richTextBoxInput.SelectionFont = new Font(richTextBoxInput.Font, FontStyle.Bold);
 
             }
