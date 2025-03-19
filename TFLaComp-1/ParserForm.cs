@@ -1,6 +1,8 @@
+using System.DirectoryServices;
 using System.Windows.Forms;
 using TFLaComp_1.Functional;
 using TFLaComp_1.ParserHelp;
+using TFLaComp_1.RegExParser;
 
 namespace TFLaComp_1
 {
@@ -29,23 +31,23 @@ namespace TFLaComp_1
 
 
             _helpProvider = new ParserHelpProvider();
-            _helpProvider.SetHelp(richTextBoxInput, HelpHtmDict.TopicDict["Правка"], HelpNavigator.Topic);
-            _helpProvider.SetHelp(file, "Создать", HelpNavigator.KeywordIndex);
-            _helpProvider.SetHelp(open, "Открыть", HelpNavigator.KeywordIndex);
-            _helpProvider.SetHelp(save, "Сохранить", HelpNavigator.KeywordIndex);
-            _helpProvider.SetHelp(start, "Пуск", HelpNavigator.Topic);
+            _helpProvider.SetHelp(richTextBoxInput, HelpHtmDict.TopicDict["ГЏГ°Г ГўГЄГ "], HelpNavigator.Topic);
+            _helpProvider.SetHelp(file, "Г‘Г®Г§Г¤Г ГІГј", HelpNavigator.KeywordIndex);
+            _helpProvider.SetHelp(open, "ГЋГІГЄГ°Г»ГІГј", HelpNavigator.KeywordIndex);
+            _helpProvider.SetHelp(save, "Г‘Г®ГµГ°Г Г­ГЁГІГј", HelpNavigator.KeywordIndex);
+            _helpProvider.SetHelp(start, "ГЏГіГ±ГЄ", HelpNavigator.Topic);
 
-            _helpProvider.SetHelp(undo, "Отменить", HelpNavigator.KeywordIndex);
-            _helpProvider.SetHelp(redo, "Повторить", HelpNavigator.KeywordIndex);
-            _helpProvider.SetHelp(copy, "Копировать", HelpNavigator.KeywordIndex);
-            _helpProvider.SetHelp(cut, "Вырезать", HelpNavigator.KeywordIndex);
-            _helpProvider.SetHelp(paste, "Вставить", HelpNavigator.KeywordIndex);
-            //_helpProvider.SetHelp(, "Удалить", HelpNavigator.KeywordIndex);
-            //_helpProvider.SetHelp(, "Выделить все", HelpNavigator.KeywordIndex);
+            _helpProvider.SetHelp(undo, "ГЋГІГ¬ГҐГ­ГЁГІГј", HelpNavigator.KeywordIndex);
+            _helpProvider.SetHelp(redo, "ГЏГ®ГўГІГ®Г°ГЁГІГј", HelpNavigator.KeywordIndex);
+            _helpProvider.SetHelp(copy, "ГЉГ®ГЇГЁГ°Г®ГўГ ГІГј", HelpNavigator.KeywordIndex);
+            _helpProvider.SetHelp(cut, "Г‚Г»Г°ГҐГ§Г ГІГј", HelpNavigator.KeywordIndex);
+            _helpProvider.SetHelp(paste, "Г‚Г±ГІГ ГўГЁГІГј", HelpNavigator.KeywordIndex);
+            //_helpProvider.SetHelp(, "Г“Г¤Г Г«ГЁГІГј", HelpNavigator.KeywordIndex);
+            //_helpProvider.SetHelp(, "Г‚Г»Г¤ГҐГ«ГЁГІГј ГўГ±ГҐ", HelpNavigator.KeywordIndex);
 
-            _helpProvider.SetHelp(this, "О программе", HelpNavigator.KeywordIndex);
+            _helpProvider.SetHelp(this, "ГЋ ГЇГ°Г®ГЈГ°Г Г¬Г¬ГҐ", HelpNavigator.KeywordIndex);
 
-            // добавить какой-то Binding?
+            // Г¤Г®ГЎГ ГўГЁГІГј ГЄГ ГЄГ®Г©-ГІГ® Binding?
             helpProvider1 = _helpProvider.HelpProvider;
 
             richTextBoxInput.TextChanged += richTextBoxInput_TextChanged;
@@ -58,7 +60,7 @@ namespace TFLaComp_1
 
         private void makeToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            // добавить Binding
+            // Г¤Г®ГЎГ ГўГЁГІГј Binding
             string text = richTextBoxInput.Text;
             _logic.Create(ref text);
             //richTextBoxInput.Text = "";
@@ -70,7 +72,7 @@ namespace TFLaComp_1
         {
             if (ConfirmSaveChanges())
             {
-                // добавить Binding
+                // Г¤Г®ГЎГ ГўГЁГІГј Binding
                 string text = richTextBoxInput.Text;
                 _logic.Create(ref text);
                 //richTextBoxInput.Text = "";
@@ -97,11 +99,11 @@ namespace TFLaComp_1
 
         private bool ConfirmSaveChanges()
         {
-            if (!isTextChanged) return true; // Если изменений нет, просто продолжаем.
+            if (!isTextChanged) return true; // Г…Г±Г«ГЁ ГЁГ§Г¬ГҐГ­ГҐГ­ГЁГ© Г­ГҐГІ, ГЇГ°Г®Г±ГІГ® ГЇГ°Г®Г¤Г®Г«Г¦Г ГҐГ¬.
 
             DialogResult result = MessageBox.Show(
-                "Сохранить изменения перед открытием нового файла?",
-                "Подтверждение",
+                "Г‘Г®ГµГ°Г Г­ГЁГІГј ГЁГ§Г¬ГҐГ­ГҐГ­ГЁГї ГЇГҐГ°ГҐГ¤ Г®ГІГЄГ°Г»ГІГЁГҐГ¬ Г­Г®ГўГ®ГЈГ® ГґГ Г©Г«Г ?",
+                "ГЏГ®Г¤ГІГўГҐГ°Г¦Г¤ГҐГ­ГЁГҐ",
                 MessageBoxButtons.YesNoCancel,
                 MessageBoxIcon.Warning);
 
@@ -116,7 +118,7 @@ namespace TFLaComp_1
                 return true;
             }
 
-            return false; // Отмена операции
+            return false; // ГЋГІГ¬ГҐГ­Г  Г®ГЇГҐГ°Г Г¶ГЁГЁ
         }
 
         private void LoadFile()
@@ -125,14 +127,14 @@ namespace TFLaComp_1
             {
                 string? text = _logic.Open();
                 if (text == null)
-                    throw new FileLoadException("Ошибка открытия файла!");
+                    throw new FileLoadException("ГЋГёГЁГЎГЄГ  Г®ГІГЄГ°Г»ГІГЁГї ГґГ Г©Г«Г !");
 
                 richTextBoxInput.Text = text;
-                isTextChanged = false; // Сбрасываем флаг изменений
+                isTextChanged = false; // Г‘ГЎГ°Г Г±Г»ГўГ ГҐГ¬ ГґГ«Г ГЈ ГЁГ§Г¬ГҐГ­ГҐГ­ГЁГ©
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(ex.Message, "ГЋГёГЁГЎГЄГ ", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -151,14 +153,64 @@ namespace TFLaComp_1
             _logic.SaveAs(richTextBoxInput.Text);
         }
 
+        private void HighlightResults(List<CardDTO> cards)
+        {
+            // Г‘ГЎГ°Г®Г± ГЇГ°ГҐГ¤Г»Г¤ГіГ№ГҐГЈГ® ГўГ»Г¤ГҐГ«ГҐГ­ГЁГї.
+            richTextBoxInput.SelectAll();
+            richTextBoxInput.SelectionColor = richTextBoxInput.ForeColor; // Г‚Г®Г±Г±ГІГ Г­Г ГўГ«ГЁГўГ ГҐГ¬ Г¶ГўГҐГІ ГІГҐГЄГ±ГІГ .
+            richTextBoxInput.SelectionFont = richTextBoxInput.Font; // Г‚Г®Г±Г±ГІГ Г­Г ГўГ«ГЁГўГ ГҐГ¬ ГёГ°ГЁГґГІ.
+
+
+            foreach (var card in cards)
+            {
+                richTextBoxInput.Select(card.IndexStart, card.IndexEnd - card.IndexStart + 1);
+                switch (card.NumberCard[0])
+                {
+                    case '2':  // ГЊГЁГ°
+                        {
+                            richTextBoxInput.SelectionColor = Color.Green;
+                        }
+                        break;
+                    case '4':  // Visa
+                        {
+                            richTextBoxInput.SelectionColor = Color.Blue;
+                        }
+                        break;
+                    case '5':  // MasterCard
+                        {
+                            richTextBoxInput.SelectionColor = Color.OrangeRed;
+                        }
+                        break;
+                    default:
+                        {
+                            richTextBoxInput.SelectionColor = Color.Purple;
+                        }
+                        break;
+                }
+                richTextBoxInput.SelectionFont = new Font(richTextBoxInput.Font, FontStyle.Bold);
+
+            }
+        }
+
+        private void ProcessInput()
+        {
+            // CardParser Г¬Г®Г¦Г­Г® Г±Г¤ГҐГ«Г ГІГј static
+            var parser = new CardParser();
+            var results = parser.Parse(richTextBoxInput.Text);
+            HighlightResults(results);
+            // ГўГ±ГІГ ГўГЁГІГј ГўГ»ГўГ®Г¤ Гў Г­ГЁГ¦Г­ГҐГҐ ГЇГ®Г«ГҐ
+        }
+
         private void start_Click(object sender, EventArgs e)
         {
-            _logic.WriteToLog();
-            MessageBox.Show("Нажат старт");
+
+            ProcessInput();
+
         }
+
         private void StartToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Нажат старт");
+            ProcessInput();
         }
 
         private void undo_Click(object sender, EventArgs e)
@@ -193,69 +245,69 @@ namespace TFLaComp_1
 
         private void aboutCodeToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Help.ShowHelp(this, helpProvider1.HelpNamespace, HelpNavigator.KeywordIndex, "О программе");
+            Help.ShowHelp(this, helpProvider1.HelpNamespace, HelpNavigator.KeywordIndex, "ГЋ ГЇГ°Г®ГЈГ°Г Г¬Г¬ГҐ");
         }
 
         private void expToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            // потом должен открываться файл курсовой
+            // ГЇГ®ГІГ®Г¬ Г¤Г®Г«Г¦ГҐГ­ Г®ГІГЄГ°Г»ГўГ ГІГјГ±Гї ГґГ Г©Г« ГЄГіГ°Г±Г®ГўГ®Г©
             Help.ShowHelp(this, helpProvider1.HelpNamespace,
-                HelpNavigator.Topic, HelpHtmDict.TopicDict["Постановка задачи"]);
+                HelpNavigator.Topic, HelpHtmDict.TopicDict["ГЏГ®Г±ГІГ Г­Г®ГўГЄГ  Г§Г Г¤Г Г·ГЁ"]);
         }
 
         private void grammarToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            // потом должен открываться файл курсовой
+            // ГЇГ®ГІГ®Г¬ Г¤Г®Г«Г¦ГҐГ­ Г®ГІГЄГ°Г»ГўГ ГІГјГ±Гї ГґГ Г©Г« ГЄГіГ°Г±Г®ГўГ®Г©
             Help.ShowHelp(this, helpProvider1.HelpNamespace,
-                HelpNavigator.Topic, HelpHtmDict.TopicDict["Грамматика"]);
+                HelpNavigator.Topic, HelpHtmDict.TopicDict["ГѓГ°Г Г¬Г¬Г ГІГЁГЄГ "]);
 
         }
 
         private void classificationgrammarClassToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            // потом должен открываться файл курсовой
+            // ГЇГ®ГІГ®Г¬ Г¤Г®Г«Г¦ГҐГ­ Г®ГІГЄГ°Г»ГўГ ГІГјГ±Гї ГґГ Г©Г« ГЄГіГ°Г±Г®ГўГ®Г©
             Help.ShowHelp(this, helpProvider1.HelpNamespace,
-                HelpNavigator.Topic, HelpHtmDict.TopicDict["Классификация"]);
+                HelpNavigator.Topic, HelpHtmDict.TopicDict["ГЉГ«Г Г±Г±ГЁГґГЁГЄГ Г¶ГЁГї"]);
 
         }
 
         private void analysismethodToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            // потом должен открываться файл курсовой
+            // ГЇГ®ГІГ®Г¬ Г¤Г®Г«Г¦ГҐГ­ Г®ГІГЄГ°Г»ГўГ ГІГјГ±Гї ГґГ Г©Г« ГЄГіГ°Г±Г®ГўГ®Г©
             Help.ShowHelp(this, helpProvider1.HelpNamespace,
-                HelpNavigator.Topic, HelpHtmDict.TopicDict["Метод анализа"]);
+                HelpNavigator.Topic, HelpHtmDict.TopicDict["ГЊГҐГІГ®Г¤ Г Г­Г Г«ГЁГ§Г "]);
 
         }
 
         private void diagnosticsNeutralizationToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            // потом должен открываться файл курсовой
+            // ГЇГ®ГІГ®Г¬ Г¤Г®Г«Г¦ГҐГ­ Г®ГІГЄГ°Г»ГўГ ГІГјГ±Гї ГґГ Г©Г« ГЄГіГ°Г±Г®ГўГ®Г©
             Help.ShowHelp(this, helpProvider1.HelpNamespace,
-                HelpNavigator.Topic, HelpHtmDict.TopicDict["Диагностика"]);
+                HelpNavigator.Topic, HelpHtmDict.TopicDict["Г„ГЁГ ГЈГ­Г®Г±ГІГЁГЄГ "]);
 
         }
 
         private void explToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            // потом должен открываться файл курсовой
+            // ГЇГ®ГІГ®Г¬ Г¤Г®Г«Г¦ГҐГ­ Г®ГІГЄГ°Г»ГўГ ГІГјГ±Гї ГґГ Г©Г« ГЄГіГ°Г±Г®ГўГ®Г©
             Help.ShowHelp(this, helpProvider1.HelpNamespace,
-                HelpNavigator.Topic, HelpHtmDict.TopicDict["Тестовый пример"]);
+                HelpNavigator.Topic, HelpHtmDict.TopicDict["Г’ГҐГ±ГІГ®ГўГ»Г© ГЇГ°ГЁГ¬ГҐГ°"]);
 
         }
 
         private void bibliographyToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            // потом должен открываться файл курсовой
+            // ГЇГ®ГІГ®Г¬ Г¤Г®Г«Г¦ГҐГ­ Г®ГІГЄГ°Г»ГўГ ГІГјГ±Гї ГґГ Г©Г« ГЄГіГ°Г±Г®ГўГ®Г©
             Help.ShowHelp(this, helpProvider1.HelpNamespace,
-                HelpNavigator.Topic, HelpHtmDict.TopicDict["Список литературы"]);
+                HelpNavigator.Topic, HelpHtmDict.TopicDict["Г‘ГЇГЁГ±Г®ГЄ Г«ГЁГІГҐГ°Г ГІГіГ°Г»"]);
 
         }
 
         private void sourceCodeToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            // потом должен открываться файл курсовой
+            // ГЇГ®ГІГ®Г¬ Г¤Г®Г«Г¦ГҐГ­ Г®ГІГЄГ°Г»ГўГ ГІГјГ±Гї ГґГ Г©Г« ГЄГіГ°Г±Г®ГўГ®Г©
             Help.ShowHelp(this, helpProvider1.HelpNamespace,
-                HelpNavigator.Topic, HelpHtmDict.TopicDict["Исходный код"]);
+                HelpNavigator.Topic, HelpHtmDict.TopicDict["Г€Г±ГµГ®Г¤Г­Г»Г© ГЄГ®Г¤"]);
 
         }
 
@@ -298,15 +350,15 @@ namespace TFLaComp_1
         {
             ////////////////////////////////////
             ///
-            /*            DialogResult dr = MessageBox.Show("Сохранить внесенные изменения перед выходом?", "Сохранение", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+            /*            DialogResult dr = MessageBox.Show("Г‘Г®ГµГ°Г Г­ГЁГІГј ГўГ­ГҐГ±ГҐГ­Г­Г»ГҐ ГЁГ§Г¬ГҐГ­ГҐГ­ГЁГї ГЇГҐГ°ГҐГ¤ ГўГ»ГµГ®Г¤Г®Г¬?", "Г‘Г®ГµГ°Г Г­ГҐГ­ГЁГҐ", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
                         if (dr.HasFlag(DialogResult.Yes))
                             _logic.SaveAs(richTextBoxInput.Text);
                         else if (dr.HasFlag(DialogResult.No))
                             _logic.Close();*/
 
             DialogResult result = MessageBox.Show(
-                "Вы хотите сохранить перед выходом?",
-                "Подтверждение",
+                "Г‚Г» ГµГ®ГІГЁГІГҐ Г±Г®ГµГ°Г Г­ГЁГІГј ГЇГҐГ°ГҐГ¤ ГўГ»ГµГ®Г¤Г®Г¬?",
+                "ГЏГ®Г¤ГІГўГҐГ°Г¦Г¤ГҐГ­ГЁГҐ",
                 MessageBoxButtons.YesNoCancel,
                 MessageBoxIcon.Question);
 
