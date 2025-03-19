@@ -111,6 +111,8 @@ namespace TFLaComp_1.Functional
         {
             _selectionStart = 0;
             _selectionLength = _content.Length;
+
+            _richTextBox.SelectAll();
         }
 
         public void SetSelection(int start, int length)
