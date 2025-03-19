@@ -13,6 +13,8 @@ namespace TFLaComp_1.Functional
         private int _selectionStart = 0;
         private int _selectionLength = 0;
 
+        private string _previousText = "";
+
         public Edit(RichTextBox richTextBox)
         {
             _richTextBox = richTextBox;
@@ -22,13 +24,17 @@ namespace TFLaComp_1.Functional
 
             _content = new StringBuilder(_richTextBox.Text);
 
-            _undoStack.Push(_content.ToString());
+            SaveStateForUndo();
+
+            _previousText = _content.ToString();
         }
 
         public void Insert(string text)
         {
             SaveStateForUndo();
+
             _content.Insert(_selectionStart, text);
+
             ContinuePosition();
         }
 
@@ -37,8 +43,10 @@ namespace TFLaComp_1.Functional
             if (_selectionLength > 0)
             {
                 SaveStateForUndo();
+
                 _content.Remove(_selectionStart, _selectionLength);
                 _richTextBox.Text = _content.ToString();
+
                 ContinuePosition();
             }
         }
@@ -53,9 +61,14 @@ namespace TFLaComp_1.Functional
             if (_selectionLength > 0)
             {
                 SaveStateForUndo();
+
                 _clipboard = _content.ToString(_selectionStart, _selectionLength);
+                Clipboard.SetText(_clipboard);
+
                 _content.Remove(_selectionStart, _selectionLength);
                 _richTextBox.Text = _content.ToString();
+
+                SetSelection(_richTextBox.SelectionStart, _richTextBox.SelectedText.Length);
                 ContinuePosition();
             }
         }
@@ -70,6 +83,7 @@ namespace TFLaComp_1.Functional
             if (_selectionLength > 0)
             {
                 _clipboard = _content.ToString(_selectionStart, _selectionLength);
+                Clipboard.SetText(_clipboard);
             }
         }
 
@@ -77,11 +91,15 @@ namespace TFLaComp_1.Functional
         {
             SetSelection(_richTextBox.SelectionStart, _richTextBox.SelectedText.Length);
 
+            _clipboard = Clipboard.GetText();
+
             if (!string.IsNullOrEmpty(_clipboard))
             {
                 SaveStateForUndo();
+
                 _content.Insert(_selectionStart, _clipboard);
                 _richTextBox.Text = _content.ToString();
+
                 ContinuePosition();
             }
         }
@@ -101,8 +119,10 @@ namespace TFLaComp_1.Functional
             if (_redoStack.Count > 0)
             {
                 SaveStateForUndo();
+
                 _content = new StringBuilder(_redoStack.Pop());
                 _richTextBox.Text = _content.ToString();
+
                 SaveStateForUndo();
             }
         }
@@ -121,11 +141,21 @@ namespace TFLaComp_1.Functional
             _selectionLength = length;
         }
 
+        public void SaveStateForUndo(string textToSave)
+        {
+            if (_undoStack.TryPeek(out string? peek))
+            {
+                if (textToSave == peek) return;
+            }
+
+            _undoStack.Push(textToSave);
+        }
+
         public void SaveStateForUndo()
         {
             if (_undoStack.TryPeek(out string? peek))
             {
-                if (_richTextBox.Text == peek) return;
+                if (_content.ToString() == peek) return;
             }
 
             _undoStack.Push(_content.ToString());
@@ -139,6 +169,24 @@ namespace TFLaComp_1.Functional
         public void SetContent()
         {
             _content = new StringBuilder(_richTextBox.Text);
+        }
+
+        public void DetectTextChange()
+        {
+            if (_previousText == _content.ToString()) return;
+
+            int minLen = Math.Min(_previousText.Length, _content.Length);
+
+            for (int i = 0; i < minLen; i++)
+            {
+                if (_previousText[i] != _content[i])
+                {
+                    SaveStateForUndo(_previousText);
+                    break;
+                }
+            }
+
+            _previousText = _content.ToString();
         }
 
         public void LogCurrentText(string filename)

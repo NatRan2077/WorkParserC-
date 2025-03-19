@@ -371,7 +371,10 @@ namespace TFLaComp_1
                 _edit.Paste();
                 e.SuppressKeyPress = true;
             }
-
+            else if (e.KeyCode == Keys.Delete || e.KeyCode == Keys.Back)
+            {
+                _edit.SaveStateForUndo();
+            }
             else if (e.Control && e.KeyCode == Keys.S)
             {
                 _logic.Save(richTextBoxInput.Text);
@@ -382,6 +385,10 @@ namespace TFLaComp_1
                 _logic.Open();
                 e.SuppressKeyPress = true;
             }
+            else
+            {
+                _edit.DetectTextChange();
+            }
         }
 
         private void richTextBoxInput_TextChanged(object sender, EventArgs e)
@@ -390,6 +397,5 @@ namespace TFLaComp_1
 
             _edit.SetContent();
         }
-
     }
 }
