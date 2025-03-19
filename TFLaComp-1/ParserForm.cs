@@ -4,6 +4,7 @@ using TFLaComp_1.Functional;
 using TFLaComp_1.ParserHelp;
 using TFLaComp_1.RegExParser;
 using TFLaComp_1.ResultLog;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.TextBox;
 
 namespace TFLaComp_1
 {
@@ -16,7 +17,6 @@ namespace TFLaComp_1
         private IParserHelpProvider _helpProvider;
 
         private ISaveResult _saveResult;
-
 
         private bool isTextChanged = false;
 
@@ -64,7 +64,8 @@ namespace TFLaComp_1
             _logic.Create(ref text);
             //richTextBoxInput.Text = "";
             richTextBoxInput.Text = text;
-            richTextBoxOutput.Text = "";
+            //richTextBoxOutput.Text = "";
+            ClearOutput();
         }
 
         private void file_Click(object sender, EventArgs e)
@@ -76,7 +77,8 @@ namespace TFLaComp_1
                 _logic.Create(ref text);
                 //richTextBoxInput.Text = "";
                 richTextBoxInput.Text = text;
-                richTextBoxOutput.Text = "";
+                //richTextBoxOutput.Text = "";
+                ClearOutput();
             }
         }
 
@@ -147,7 +149,7 @@ namespace TFLaComp_1
             _logic.Save(richTextBoxInput.Text);
         }
 
-        private void saveAssToolStripMenuItem_Click(object sender, EventArgs e)
+        private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             _logic.SaveAs(richTextBoxInput.Text);
         }
@@ -165,7 +167,6 @@ namespace TFLaComp_1
 
                 richTextBoxInput.SelectionColor = Color.Green;
                 richTextBoxInput.SelectionFont = new Font(richTextBoxInput.Font, FontStyle.Bold);
-
             }
         }
 
@@ -175,6 +176,33 @@ namespace TFLaComp_1
             var results = parser.Parse(richTextBoxInput.Text);
             HighlightResults(results);
             _saveResult.WriteToLog(results);
+
+            AnalyzerCard analyzerCard = new AnalyzerCard(results);
+            PrintOutput(analyzerCard.Analyze());
+        }
+
+        private void PrintOutput(List<FullCardDTO> cards)
+        {
+            ClearOutput();
+
+            dataGridViewOutput.Columns.Add("CardNumber", "Номер карты");
+            dataGridViewOutput.Columns.Add("Bank", "Банк");
+            dataGridViewOutput.Columns.Add("PaymentSystem", "Платежная система");
+            dataGridViewOutput.Columns.Add("Indexes", "Индексы");
+
+            for (int i = 0; i < cards.Count; i++)
+            {
+                dataGridViewOutput.Rows[i].Cells[0].Value = cards[i].NumberCard;
+                dataGridViewOutput.Rows[i].Cells[1].Value = cards[i].Bank;
+                dataGridViewOutput.Rows[i].Cells[2].Value = cards[i].PaymentSystem;
+                dataGridViewOutput.Rows[i].Cells[3].Value = $"{cards[i].IndexStart} - {cards[i].IndexEnd}";
+            }
+        }
+
+        private void ClearOutput()
+        {
+            dataGridViewOutput.Rows.Clear();
+            dataGridViewOutput.Columns.Clear();
         }
 
         private void start_Click(object sender, EventArgs e)
