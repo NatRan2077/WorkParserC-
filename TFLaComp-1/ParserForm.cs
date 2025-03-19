@@ -1,6 +1,8 @@
+using System.DirectoryServices;
 using System.Windows.Forms;
 using TFLaComp_1.Functional;
 using TFLaComp_1.ParserHelp;
+using TFLaComp_1.RegExParser;
 
 namespace TFLaComp_1
 {
@@ -151,13 +153,62 @@ namespace TFLaComp_1
             _logic.SaveAs(richTextBoxInput.Text);
         }
 
+        private void HighlightResults(List<CardDTO> cards)
+        {
+            // Сброс предыдущего выделения.
+            richTextBoxInput.SelectAll();
+            richTextBoxInput.SelectionColor = richTextBoxInput.ForeColor; // Восстанавливаем цвет текста.
+            richTextBoxInput.SelectionFont = richTextBoxInput.Font; // Восстанавливаем шрифт.
+
+
+            foreach (var card in cards)
+            {
+                richTextBoxInput.Select(card.IndexStart, card.IndexEnd - card.IndexStart + 1);
+                switch (card.NumberCard[0])
+                {
+                    case '2':  // Мир
+                        {
+                            richTextBoxInput.SelectionColor = Color.Green;
+                        }
+                        break;
+                    case '4':  // Visa
+                        {
+                            richTextBoxInput.SelectionColor = Color.Blue;
+                        }
+                        break;
+                    case '5':  // MasterCard
+                        {
+                            richTextBoxInput.SelectionColor = Color.OrangeRed;
+                        }
+                        break;
+                    default:
+                        {
+                            richTextBoxInput.SelectionColor = Color.Purple;
+                        }
+                        break;
+                }
+                richTextBoxInput.SelectionFont = new Font(richTextBoxInput.Font, FontStyle.Bold);
+
+            }
+        }
+
+        private void ProcessInput()
+        {
+            // CardParser можно сделать static
+            var parser = new CardParser();
+            var results = parser.Parse(richTextBoxInput.Text);
+            HighlightResults(results);
+            // вставить вывод в нижнее поле
+        }
+
         private void start_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Нажат старт");
+            ProcessInput();
         }
+
         private void StartToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Нажат старт");
+            ProcessInput();
         }
 
         private void undo_Click(object sender, EventArgs e)
