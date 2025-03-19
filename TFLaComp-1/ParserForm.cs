@@ -29,9 +29,9 @@ namespace TFLaComp_1
             _saveResult = new SaveResult();
             _edit = new Edit(richTextBoxInput);
             _logic = new FileLogic();
-        //_helpProvider = new ParserHelpProvider($"\\ParserHelp\\res\\parserHelpProvider.chm");
-        //helpProvider1 = _helpProvider.HelpProvider;
-        //helpProvider1.HelpNamespace = $"ParserHelp\\res\\parserHelpProvider.chm";
+            //_helpProvider = new ParserHelpProvider($"\\ParserHelp\\res\\parserHelpProvider.chm");
+            //helpProvider1 = _helpProvider.HelpProvider;
+            //helpProvider1.HelpNamespace = $"ParserHelp\\res\\parserHelpProvider.chm";
 
 
             _helpProvider = new ParserHelpProvider();
