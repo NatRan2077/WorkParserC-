@@ -13,6 +13,17 @@ namespace TFLaComp_1.DTO
         public string PaymentSystem { get; private set; }
         public string Bank { get; private set; }
 
+        public string getNumberCard() {
+            return _card.NumberCard;
+        }
+        public int getIndexStart()
+        {
+            return _card.IndexStart;
+        }
+        public int getIndexEnd()
+        {
+            return _card.IndexEnd;
+        }
         public FullCardDTO(CardDTO card, string paymentSystem, string bank)
         {
             _card = card;

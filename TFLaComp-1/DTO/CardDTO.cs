@@ -8,9 +8,9 @@ namespace TFLaComp_1.DTO
 {
     public class CardDTO
     {
-        public string NumberCard { get; set; }
-        public int IndexStart { get; set; }
-        public int IndexEnd { get; set; }
+        public string NumberCard { get; private set; }
+        public int IndexStart { get; private set; }
+        public int IndexEnd { get; private set; }
         public CardDTO(string numberCard, int start, int end)
         {
             NumberCard = numberCard;
