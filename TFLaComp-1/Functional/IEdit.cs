@@ -15,7 +15,7 @@ namespace TFLaComp_1.Functional
         void Paste();
         void Delete();
         void SelectAll();
-        void SaveUndo();
-        
+        void SaveStateForUndo();
+        void SetContent();
     }
 }

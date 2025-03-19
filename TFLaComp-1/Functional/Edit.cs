@@ -1,4 +1,4 @@
-﻿using System.Reflection.Metadata;
+﻿using System.Text;
 
 namespace TFLaComp_1.Functional
 {
@@ -6,124 +6,138 @@ namespace TFLaComp_1.Functional
     {
         private RichTextBox _richTextBox;
 
-        private Stack<string> _undoText;
-
-        private Stack<string> _redoText;
-
-        private string _copiedText;
-
-        private string _logFilePath = "log.txt";
+        private StringBuilder _content;
+        private Stack<string> _undoStack;
+        private Stack<string> _redoStack;
+        private string _clipboard = "";
+        private int _selectionStart = 0;
+        private int _selectionLength = 0;
 
         public Edit(RichTextBox richTextBox)
         {
             _richTextBox = richTextBox;
 
-            _undoText = new Stack<string>();
-            _redoText = new Stack<string>();
+            _undoStack = new Stack<string>();
+            _redoStack = new Stack<string>();
 
-            _copiedText = string.Empty;
+            _content = new StringBuilder(_richTextBox.Text);
 
-            SaveUndo();
+            _undoStack.Push(_content.ToString());
         }
 
-        public void Undo()
+        public void Insert(string text)
         {
-            if (_undoText.Count <= 0) return;
-
-            _redoText.Push(_richTextBox.Text);
-            _richTextBox.Text = _undoText.Pop();
-        }
-
-        public void Redo()
-        {
-            if (_redoText.Count <= 0) return;
-
-            string text = _redoText.Pop();
-
-            SaveUndo();
-
-            _richTextBox.Text = text;
-        }
-
-        public void Cut()
-        {
-            string selectedText = _richTextBox.SelectedText;
-
-            if (string.IsNullOrEmpty(selectedText)) return;
-
-            int selectionStart = _richTextBox.SelectionStart;
-
-            Clipboard.SetText(selectedText, TextDataFormat.Text);
-
-            _copiedText = selectedText;
-            
-            string text = _richTextBox.Text.Remove(_richTextBox.SelectionStart, _copiedText.Length);
-
-            SaveUndo();
-
-            _richTextBox.Text = text;
-
-            _richTextBox.SelectionStart = selectionStart;
-        }
-
-        public void Copy()
-        {
-            string selectedText = _richTextBox.SelectedText;
-            if (string.IsNullOrEmpty(selectedText)) return;
-
-            Clipboard.SetText(selectedText, TextDataFormat.Text);
-
-            _copiedText = selectedText;
-        }
-
-        public void Paste()
-        {
-            _copiedText = Clipboard.GetText(TextDataFormat.Text);
-
-            if (string.IsNullOrEmpty(_copiedText)) return;
-
-            int selectionStart = _richTextBox.SelectionStart + _copiedText.Length;
-
-            string text = _richTextBox.Text.Insert(_richTextBox.SelectionStart, _copiedText);
-
-            SaveUndo();
-
-            _richTextBox.Text = text;
-
-            _richTextBox.SelectionStart = selectionStart;
+            SaveStateForUndo();
+            _content.Insert(_selectionStart, text);
+            ContinuePosition();
         }
 
         public void Delete()
         {
-            string selectedText = _richTextBox.SelectedText;
+            if (_selectionLength > 0)
+            {
+                SaveStateForUndo();
+                _content.Remove(_selectionStart, _selectionLength);
+                _richTextBox.Text = _content.ToString();
+                ContinuePosition();
+            }
+        }
 
-            if (string.IsNullOrEmpty(selectedText)) return;
+        public void Cut()
+        {
+            if (_selectionLength == 0)
+            {
+                SetSelection(_richTextBox.SelectionStart, _richTextBox.SelectedText.Length);
+            }
 
-            string text = _richTextBox.Text.Remove(_richTextBox.SelectionStart, selectedText.Length);
+            if (_selectionLength > 0)
+            {
+                SaveStateForUndo();
+                _clipboard = _content.ToString(_selectionStart, _selectionLength);
+                _content.Remove(_selectionStart, _selectionLength);
+                _richTextBox.Text = _content.ToString();
+                ContinuePosition();
+            }
+        }
 
-            SaveUndo();
+        public void Copy()
+        {
+            if (_selectionLength == 0)
+            {
+                SetSelection(_richTextBox.SelectionStart, _richTextBox.SelectedText.Length);
+            }
 
-            _richTextBox.Text = text;
+            if (_selectionLength > 0)
+            {
+                _clipboard = _content.ToString(_selectionStart, _selectionLength);
+            }
+        }
+
+        public void Paste()
+        {
+            SetSelection(_richTextBox.SelectionStart, _richTextBox.SelectedText.Length);
+
+            if (!string.IsNullOrEmpty(_clipboard))
+            {
+                SaveStateForUndo();
+                _content.Insert(_selectionStart, _clipboard);
+                _richTextBox.Text = _content.ToString();
+                ContinuePosition();
+            }
+        }
+
+        public void Undo()
+        {
+            if (_undoStack.Count > 0)
+            {
+                _redoStack.Push(_content.ToString());
+                _content = new StringBuilder(_undoStack.Pop());
+                _richTextBox.Text = _content.ToString();
+            }
+        }
+
+        public void Redo()
+        {
+            if (_redoStack.Count > 0)
+            {
+                SaveStateForUndo();
+                _content = new StringBuilder(_redoStack.Pop());
+                _richTextBox.Text = _content.ToString();
+                SaveStateForUndo();
+            }
         }
 
         public void SelectAll()
         {
-            _richTextBox.SelectAll();
+            _selectionStart = 0;
+            _selectionLength = _content.Length;
         }
 
-        public void SaveUndo()
+        public void SetSelection(int start, int length)
         {
-            string? peek;
+            _selectionStart = start;
+            _selectionLength = length;
+        }
 
-            if (_undoText.TryPeek(out peek))
+        public void SaveStateForUndo()
+        {
+            if (_undoStack.TryPeek(out string? peek))
             {
                 if (_richTextBox.Text == peek) return;
             }
 
-            _undoText.Push(_richTextBox.Text);
+            _undoStack.Push(_content.ToString());
         }
 
+        private void ContinuePosition()
+        {
+            _richTextBox.SelectionStart = _selectionStart + _selectionLength;
+        }
 
+        public void SetContent()
+        {
+            _content = new StringBuilder(_richTextBox.Text);
+        }
 
         public void LogCurrentText(string filename)
         {
