@@ -15,7 +15,9 @@ namespace TFLaComp_1.Functional
         void Paste();
         void Delete();
         void SelectAll();
+        void SaveStateForUndo(string textToSave);
         void SaveStateForUndo();
         void SetContent();
+        void DetectTextChange();
     }
 }
