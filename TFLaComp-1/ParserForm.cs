@@ -1,4 +1,5 @@
 using System.Windows.Forms;
+using TFLaComp_1.DTO;
 using TFLaComp_1.Functional;
 using TFLaComp_1.ParserHelp;
 using TFLaComp_1.RegExParser;

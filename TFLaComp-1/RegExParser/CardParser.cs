@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using TFLaComp_1.DTO;
 using static System.Net.Mime.MediaTypeNames;
 
 namespace TFLaComp_1.RegExParser
