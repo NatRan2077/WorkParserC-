@@ -35,11 +35,13 @@ namespace TFLaComp_1.Functional
 
             _content.Insert(_selectionStart, text);
 
-            ContinuePosition();
+            ContinuePosition(_selectionStart, text.Length);
         }
 
         public void Delete()
         {
+            SetSelection(_richTextBox.SelectionStart, _richTextBox.SelectedText.Length);
+
             if (_selectionLength > 0)
             {
                 SaveStateForUndo();
@@ -47,16 +49,13 @@ namespace TFLaComp_1.Functional
                 _content.Remove(_selectionStart, _selectionLength);
                 _richTextBox.Text = _content.ToString();
 
-                ContinuePosition();
+                ContinuePosition(_selectionStart, _selectionLength);
             }
         }
 
         public void Cut()
         {
-            if (_selectionLength == 0)
-            {
-                SetSelection(_richTextBox.SelectionStart, _richTextBox.SelectedText.Length);
-            }
+            SetSelection(_richTextBox.SelectionStart, _richTextBox.SelectedText.Length);
 
             if (_selectionLength > 0)
             {
@@ -68,17 +67,22 @@ namespace TFLaComp_1.Functional
                 _content.Remove(_selectionStart, _selectionLength);
                 _richTextBox.Text = _content.ToString();
 
-                SetSelection(_richTextBox.SelectionStart, _richTextBox.SelectedText.Length);
-                ContinuePosition();
+                SetSelection(_selectionStart, 0);
+
+                if (_selectionStart > _content.Length)
+                {
+                    ContinuePosition(_content.Length - 1, 0);
+                }
+                else
+                {
+                    ContinuePosition(_selectionStart, 0);
+                }
             }
         }
 
         public void Copy()
         {
-            if (_selectionLength == 0)
-            {
-                SetSelection(_richTextBox.SelectionStart, _richTextBox.SelectedText.Length);
-            }
+            SetSelection(_richTextBox.SelectionStart, _richTextBox.SelectedText.Length);
 
             if (_selectionLength > 0)
             {
@@ -100,7 +104,7 @@ namespace TFLaComp_1.Functional
                 _content.Insert(_selectionStart, _clipboard);
                 _richTextBox.Text = _content.ToString();
 
-                ContinuePosition();
+                ContinuePosition(_selectionStart, _clipboard.Length);
             }
         }
 
@@ -161,9 +165,9 @@ namespace TFLaComp_1.Functional
             _undoStack.Push(_content.ToString());
         }
 
-        private void ContinuePosition()
+        private void ContinuePosition(int start, int lenght)
         {
-            _richTextBox.SelectionStart = _selectionStart + _selectionLength;
+            _richTextBox.SelectionStart = start + lenght;
         }
 
         public void SetContent()

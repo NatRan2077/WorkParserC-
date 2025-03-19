@@ -65,8 +65,7 @@ namespace TFLaComp_1
             //richTextBoxInput.Text = "";
             richTextBoxInput.Text = text;
             //richTextBoxOutput.Text = "";
-            dataGridViewOutput.Rows.Clear();
-            dataGridViewOutput.Columns.Clear();
+            ClearOutput();
         }
 
         private void file_Click(object sender, EventArgs e)
@@ -79,8 +78,7 @@ namespace TFLaComp_1
                 //richTextBoxInput.Text = "";
                 richTextBoxInput.Text = text;
                 //richTextBoxOutput.Text = "";
-                dataGridViewOutput.Rows.Clear();
-                dataGridViewOutput.Columns.Clear();
+                ClearOutput();
             }
         }
 
@@ -185,6 +183,8 @@ namespace TFLaComp_1
 
         private void PrintOutput(List<FullCardDTO> cards)
         {
+            ClearOutput();
+
             dataGridViewOutput.Columns.Add("CardNumber", "Номер карты");
             dataGridViewOutput.Columns.Add("Bank", "Банк");
             dataGridViewOutput.Columns.Add("PaymentSystem", "Платежная система");
@@ -197,6 +197,12 @@ namespace TFLaComp_1
                 dataGridViewOutput.Rows[i].Cells[2].Value = cards[i].PaymentSystem;
                 dataGridViewOutput.Rows[i].Cells[3].Value = $"{cards[i].IndexStart} - {cards[i].IndexEnd}";
             }
+        }
+
+        private void ClearOutput()
+        {
+            dataGridViewOutput.Rows.Clear();
+            dataGridViewOutput.Columns.Clear();
         }
 
         private void start_Click(object sender, EventArgs e)
