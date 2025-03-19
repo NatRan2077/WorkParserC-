@@ -52,11 +52,6 @@ namespace TFLaComp_1
             richTextBoxInput.TextChanged += richTextBoxInput_TextChanged;
         }
 
-        private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
-        {
-
-        }
-
         private void makeToolStripMenuItem_Click(object sender, EventArgs e)
         {
             // добавить Binding
@@ -371,6 +366,27 @@ namespace TFLaComp_1
                 _edit.Redo();
                 e.SuppressKeyPress = true;
             }
+            else if (e.Control && e.KeyCode == Keys.A)
+            {
+                _edit.SelectAll();
+                e.SuppressKeyPress = true;
+            }
+            else if (e.Control && e.KeyCode == Keys.X)
+            {
+                _edit.Cut();
+                e.SuppressKeyPress = true;
+            }
+            else if (e.Control && e.KeyCode == Keys.C)
+            {
+                _edit.Copy();
+                e.SuppressKeyPress = true;
+            }
+            else if (e.Control && e.KeyCode == Keys.V)
+            {
+                _edit.Paste();
+                e.SuppressKeyPress = true;
+            }
+
             else if (e.Control && e.KeyCode == Keys.S)
             {
                 _logic.Save(richTextBoxInput.Text);
@@ -381,14 +397,13 @@ namespace TFLaComp_1
                 _logic.Open();
                 e.SuppressKeyPress = true;
             }
-            else
-                _edit.SaveUndo();
         }
 
         private void richTextBoxInput_TextChanged(object sender, EventArgs e)
         {
             isTextChanged = true;
 
+            _edit.SetContent();
         }
 
     }
