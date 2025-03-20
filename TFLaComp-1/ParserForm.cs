@@ -102,7 +102,7 @@ namespace TFLaComp_1
 
         private bool ConfirmSaveChanges()
         {
-            if (!isTextChanged) return true; // Если изменений нет, просто продолжаем.
+            if (!isTextChanged || richTextBoxInput.Text == "") return true; // Если изменений нет, просто продолжаем.
 
             DialogResult result = MessageBox.Show(
                 "Сохранить изменения перед открытием нового файла?",
