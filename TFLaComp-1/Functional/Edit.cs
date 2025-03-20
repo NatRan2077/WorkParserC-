@@ -131,8 +131,6 @@ namespace TFLaComp_1.Functional
 
                 _content = new StringBuilder(_redoStack.Pop());
                 _richTextBox.Text = _content.ToString();
-
-                SaveStateForUndo();
             }
         }
 
@@ -185,6 +183,13 @@ namespace TFLaComp_1.Functional
             if (_previousText == _content.ToString()) return;
 
             int minLen = Math.Min(_previousText.Length, _content.Length);
+
+            if (minLen == 0)
+            {
+                SaveStateForUndo(_previousText);
+                _redoStack.Clear();
+                return;
+            }
 
             for (int i = 0; i < minLen; i++)
             {
