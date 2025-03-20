@@ -29,7 +29,7 @@ namespace TFLaComp_1
 
             this.HelpButton = true;
             _saveResult = new SaveResult();
-            _edit = new Edit(richTextBoxInput);
+            InitEdit();
             _logic = new FileLogic();
             //_helpProvider = new ParserHelpProvider($"\\ParserHelp\\res\\parserHelpProvider.chm");
             //helpProvider1 = _helpProvider.HelpProvider;
@@ -64,9 +64,7 @@ namespace TFLaComp_1
             // добавить Binding
             string text = richTextBoxInput.Text;
             _logic.Create(ref text);
-            //richTextBoxInput.Text = "";
             richTextBoxInput.Text = text;
-            //richTextBoxOutput.Text = "";
             ClearOutput();
         }
 
@@ -77,9 +75,7 @@ namespace TFLaComp_1
                 // добавить Binding
                 string text = richTextBoxInput.Text;
                 _logic.Create(ref text);
-                //richTextBoxInput.Text = "";
                 richTextBoxInput.Text = text;
-                //richTextBoxOutput.Text = "";
                 ClearOutput();
             }
         }
@@ -134,7 +130,7 @@ namespace TFLaComp_1
 
                 richTextBoxInput.Text = text;
                 isTextChanged = false; // Сбрасываем флаг изменений
-                _edit = new Edit(richTextBoxInput);
+                InitEdit();
             }
             catch (Exception ex)
             {
@@ -184,6 +180,9 @@ namespace TFLaComp_1
 
             AnalyzerCard analyzerCard = new AnalyzerCard(results);
             PrintOutput(analyzerCard.Analyze());
+
+            richTextBoxInput.ClearUndo();
+            OnStateChanged();
         }
 
         private void PrintOutput(List<FullCardDTO> cards)
@@ -412,10 +411,6 @@ namespace TFLaComp_1
                 _edit.Paste();
                 e.SuppressKeyPress = true;
             }
-            else if (e.KeyCode == Keys.Delete || e.KeyCode == Keys.Back)
-            {
-                _edit.SaveStateForUndo();
-            }
             else if (e.Control && e.KeyCode == Keys.S)
             {
                 _logic.Save(richTextBoxInput.Text);
@@ -426,14 +421,12 @@ namespace TFLaComp_1
                 _logic.Open();
                 e.SuppressKeyPress = true;
             }
-            else
-            {
-                _edit.DetectTextChange();
-            }
         }
 
         private void richTextBoxInput_TextChanged(object sender, EventArgs e)
         {
+            OnStateChanged();
+
             isTextChanged = true;
             if (isHighlighted)
             {
@@ -448,8 +441,20 @@ namespace TFLaComp_1
                 //richTextBoxInput.SelectionColor = richTextBoxInput.ForeColor;
                 isHighlighted = false;
             }
-            _edit.SetContent();
             //isHighlighted = false;
+        }
+
+        private void InitEdit()
+        {
+            _edit = new Edit(richTextBoxInput);
+            _edit.StateChanged += OnStateChanged;
+            OnStateChanged();
+        }
+
+        private void OnStateChanged()
+        {
+            undo.Enabled = richTextBoxInput.CanUndo;
+            redo.Enabled = richTextBoxInput.CanRedo;
         }
 
         private void richTextBoxInput_Enter(object sender, EventArgs e)
