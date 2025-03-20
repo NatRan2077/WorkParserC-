@@ -192,7 +192,11 @@ namespace TFLaComp_1
             dataGridViewOutput.Columns.Add("PaymentSystem", "Платежная система");
             dataGridViewOutput.Columns.Add("Indexes", "Индексы");
 
-            int index = dataGridViewOutput.Rows.Add(cards.Count - 1);
+            if (cards.Count > 1)
+            {
+                dataGridViewOutput.Rows.Add(cards.Count - 1);
+            }
+            
 
             for (int i = 0; i < cards.Count; i++)
             {
