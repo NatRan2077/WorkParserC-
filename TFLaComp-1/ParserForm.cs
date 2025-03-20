@@ -132,6 +132,7 @@ namespace TFLaComp_1
 
                 richTextBoxInput.Text = text;
                 isTextChanged = false; // Сбрасываем флаг изменений
+                _edit = new Edit(richTextBoxInput);
             }
             catch (Exception ex)
             {
