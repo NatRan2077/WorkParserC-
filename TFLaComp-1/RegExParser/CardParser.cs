@@ -18,13 +18,22 @@ namespace TFLaComp_1.RegExParser
 
             string patternWithout = "\\d{16}";
             string patternWithSpacess = "\\d{4}( \\d{4}){3}";
-            //пробел перед началом добавить
+
             string pattern = @"(^| )((" + patternWithout + ")" + "|" + "(" + patternWithSpacess + "))($?)";
 
             Match match = Regex.Match(input, pattern);
             while (match.Success)
             {
-                string value = match.Value.Replace(" ", "");
+                string value = match.Value;
+                value = value.Trim();
+                if (value.Contains(' ') == false)
+                {
+                    for (int i = 0; i < 4; i++)
+                    {
+                        value = value.Insert(4 + i * 4 + i, " ");
+                    }
+                }
+                //string value = match.Value.Replace(" ", "");
                 CardDTO card = new CardDTO(value, match.Index, match.Index + match.Value.Length - 1);
                 cards.Add(card);
                 match = match.NextMatch();
