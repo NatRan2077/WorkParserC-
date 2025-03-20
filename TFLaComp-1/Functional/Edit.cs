@@ -101,6 +101,11 @@ namespace TFLaComp_1.Functional
             {
                 SaveStateForUndo();
 
+                if (_selectionLength > 0)
+                {
+                    _content.Remove(_selectionStart, _selectionLength);
+                }
+
                 _content.Insert(_selectionStart, _clipboard);
                 _richTextBox.Text = _content.ToString();
 

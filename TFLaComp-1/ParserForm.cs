@@ -185,10 +185,14 @@ namespace TFLaComp_1
         {
             ClearOutput();
 
+            if (cards.Count <= 0) return;
+
             dataGridViewOutput.Columns.Add("CardNumber", "Номер карты");
             dataGridViewOutput.Columns.Add("Bank", "Банк");
             dataGridViewOutput.Columns.Add("PaymentSystem", "Платежная система");
             dataGridViewOutput.Columns.Add("Indexes", "Индексы");
+
+            int index = dataGridViewOutput.Rows.Add(cards.Count - 1);
 
             for (int i = 0; i < cards.Count; i++)
             {
