@@ -20,6 +20,8 @@ namespace TFLaComp_1
 
         private bool isTextChanged = false;
 
+        private bool isHighlighted = false;
+
         public ParserForm()
         {
             InitializeComponent();
@@ -157,6 +159,7 @@ namespace TFLaComp_1
 
         private void HighlightResults(List<CardDTO> cards)
         {
+            //isHighlighted = true;
             richTextBoxInput.SelectAll();
             richTextBoxInput.SelectionColor = richTextBoxInput.ForeColor;
             richTextBoxInput.SelectionFont = richTextBoxInput.Font;
@@ -169,6 +172,7 @@ namespace TFLaComp_1
                 richTextBoxInput.SelectionColor = Color.Green;
                 richTextBoxInput.SelectionFont = new Font(richTextBoxInput.Font, FontStyle.Bold);
             }
+            isHighlighted = true;
         }
 
         private void ProcessInput()
@@ -197,7 +201,7 @@ namespace TFLaComp_1
             {
                 dataGridViewOutput.Rows.Add(cards.Count - 1);
             }
-            
+
 
             for (int i = 0; i < cards.Count; i++)
             {
@@ -431,8 +435,29 @@ namespace TFLaComp_1
         private void richTextBoxInput_TextChanged(object sender, EventArgs e)
         {
             isTextChanged = true;
+            if (isHighlighted)
+            {
+                int start = richTextBoxInput.SelectionStart;
 
+                // вызывает этот метод заново, из-за чего все ломается
+                //richTextBoxInput.SelectAll();
+
+                richTextBoxInput.SelectionColor = richTextBoxInput.ForeColor;
+                richTextBoxInput.SelectionFont = richTextBoxInput.Font;
+                richTextBoxInput.SelectionStart = start;
+                //richTextBoxInput.SelectionColor = richTextBoxInput.ForeColor;
+                isHighlighted = false;
+            }
             _edit.SetContent();
+            //isHighlighted = false;
+        }
+
+        private void richTextBoxInput_Enter(object sender, EventArgs e)
+        {
+            //richTextBoxInput.SelectAll();
+            //richTextBoxInput.SelectionColor = richTextBoxInput.ForeColor;
+            //richTextBoxInput.SelectionFont = richTextBoxInput.Font;
+
         }
     }
 }
