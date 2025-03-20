@@ -14,7 +14,8 @@ namespace TFLaComp_1.RegExParser
         public List<CardDTO> Parse(string input) {
             List<CardDTO> cards = new List<CardDTO>();
 
-            input = input.Replace(" ", "");
+            input = input.Trim();
+            //input = input.Replace(" ", "");
 
             string patternWithout = "\\d{16}";
             string patternWithSpacess = "\\d{4}( \\d{4}){3}";
