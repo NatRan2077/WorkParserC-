@@ -17,7 +17,7 @@ namespace TFLaComp_1.RegExParser
             string patternWithout = "\\d{16}";
             string patternWithSpacess = "\\d{4}( \\d{4}){3}";
             //пробел перед началом добавить
-            string pattern = @"(^| )((" + patternWithout + ")" + "|" + "(" + patternWithSpacess + "))($| )";
+            string pattern = @"(^| )((" + patternWithout + ")" + "|" + "(" + patternWithSpacess + "))($?)";
 
             Match match = Regex.Match(input, pattern);
             while (match.Success)
