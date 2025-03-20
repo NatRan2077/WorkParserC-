@@ -18,7 +18,7 @@ namespace TFLaComp_1
             { "4", "Visa" },
             { "5", "MasterCard" },
             { "6", "UnionPay" },
-            { "22", "Мир" }
+            { "2", "Мир" }
         };
 
         private static readonly Dictionary<string, string> BankCodes = new()
