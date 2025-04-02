@@ -29,7 +29,7 @@ namespace TFLaComp_1
 
             this.HelpButton = true;
             _saveResult = new SaveResult();
-            InitEdit();
+            _edit = new Edit(richTextBoxInput);
             _logic = new FileLogic();
             //_helpProvider = new ParserHelpProvider($"\\ParserHelp\\res\\parserHelpProvider.chm");
             //helpProvider1 = _helpProvider.HelpProvider;
@@ -64,7 +64,9 @@ namespace TFLaComp_1
             // добавить Binding
             string text = richTextBoxInput.Text;
             _logic.Create(ref text);
+            //richTextBoxInput.Text = "";
             richTextBoxInput.Text = text;
+            //richTextBoxOutput.Text = "";
             ClearOutput();
         }
 
@@ -75,7 +77,9 @@ namespace TFLaComp_1
                 // добавить Binding
                 string text = richTextBoxInput.Text;
                 _logic.Create(ref text);
+                //richTextBoxInput.Text = "";
                 richTextBoxInput.Text = text;
+                //richTextBoxOutput.Text = "";
                 ClearOutput();
             }
         }
@@ -98,7 +102,7 @@ namespace TFLaComp_1
 
         private bool ConfirmSaveChanges()
         {
-            if (!isTextChanged || richTextBoxInput.Text == "") return true; // Если изменений нет, просто продолжаем.
+            if (!isTextChanged) return true; // Если изменений нет, просто продолжаем.
 
             DialogResult result = MessageBox.Show(
                 "Сохранить изменения перед открытием нового файла?",
@@ -130,7 +134,7 @@ namespace TFLaComp_1
 
                 richTextBoxInput.Text = text;
                 isTextChanged = false; // Сбрасываем флаг изменений
-                InitEdit();
+                _edit = new Edit(richTextBoxInput);
             }
             catch (Exception ex)
             {
@@ -180,9 +184,6 @@ namespace TFLaComp_1
 
             AnalyzerCard analyzerCard = new AnalyzerCard(results);
             PrintOutput(analyzerCard.Analyze());
-
-            richTextBoxInput.ClearUndo();
-            OnStateChanged();
         }
 
         private void PrintOutput(List<FullCardDTO> cards)
@@ -411,6 +412,10 @@ namespace TFLaComp_1
                 _edit.Paste();
                 e.SuppressKeyPress = true;
             }
+            else if (e.KeyCode == Keys.Delete || e.KeyCode == Keys.Back)
+            {
+                _edit.SaveStateForUndo();
+            }
             else if (e.Control && e.KeyCode == Keys.S)
             {
                 _logic.Save(richTextBoxInput.Text);
@@ -421,48 +426,30 @@ namespace TFLaComp_1
                 _logic.Open();
                 e.SuppressKeyPress = true;
             }
+            else
+            {
+                _edit.DetectTextChange();
+            }
         }
 
         private void richTextBoxInput_TextChanged(object sender, EventArgs e)
         {
-            OnStateChanged();
-
             isTextChanged = true;
             if (isHighlighted)
             {
                 int start = richTextBoxInput.SelectionStart;
-
-                // вызывает этот метод заново, из-за чего все ломается
-                //richTextBoxInput.SelectAll();
+                richTextBoxInput.SelectionStart = 0;
+                richTextBoxInput.SelectionLength = richTextBoxInput.TextLength;
 
                 richTextBoxInput.SelectionColor = richTextBoxInput.ForeColor;
                 richTextBoxInput.SelectionFont = richTextBoxInput.Font;
+
                 richTextBoxInput.SelectionStart = start;
-                //richTextBoxInput.SelectionColor = richTextBoxInput.ForeColor;
+                richTextBoxInput.SelectionLength = 0;
                 isHighlighted = false;
             }
-            //isHighlighted = false;
+            _edit.SetContent();
         }
 
-        private void InitEdit()
-        {
-            _edit = new Edit(richTextBoxInput);
-            _edit.StateChanged += OnStateChanged;
-            OnStateChanged();
-        }
-
-        private void OnStateChanged()
-        {
-            undo.Enabled = richTextBoxInput.CanUndo;
-            redo.Enabled = richTextBoxInput.CanRedo;
-        }
-
-        private void richTextBoxInput_Enter(object sender, EventArgs e)
-        {
-            //richTextBoxInput.SelectAll();
-            //richTextBoxInput.SelectionColor = richTextBoxInput.ForeColor;
-            //richTextBoxInput.SelectionFont = richTextBoxInput.Font;
-
-        }
     }
 }
