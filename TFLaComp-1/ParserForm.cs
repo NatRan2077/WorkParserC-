@@ -31,10 +31,6 @@ namespace TFLaComp_1
             _saveResult = new SaveResult();
             InitEdit();
             _logic = new FileLogic();
-            //_helpProvider = new ParserHelpProvider($"\\ParserHelp\\res\\parserHelpProvider.chm");
-            //helpProvider1 = _helpProvider.HelpProvider;
-            //helpProvider1.HelpNamespace = $"ParserHelp\\res\\parserHelpProvider.chm";
-
 
             _helpProvider = new ParserHelpProvider();
             _helpProvider.SetHelp(richTextBoxInput, HelpHtmDict.TopicDict["Правка"], HelpNavigator.Topic);
@@ -48,12 +44,9 @@ namespace TFLaComp_1
             _helpProvider.SetHelp(copy, "Копировать", HelpNavigator.KeywordIndex);
             _helpProvider.SetHelp(cut, "Вырезать", HelpNavigator.KeywordIndex);
             _helpProvider.SetHelp(paste, "Вставить", HelpNavigator.KeywordIndex);
-            //_helpProvider.SetHelp(, "Удалить", HelpNavigator.KeywordIndex);
-            //_helpProvider.SetHelp(, "Выделить все", HelpNavigator.KeywordIndex);
 
             _helpProvider.SetHelp(this, "О программе", HelpNavigator.KeywordIndex);
 
-            // добавить какой-то Binding?
             helpProvider1 = _helpProvider.HelpProvider;
 
             richTextBoxInput.TextChanged += richTextBoxInput_TextChanged;
@@ -72,7 +65,6 @@ namespace TFLaComp_1
         {
             if (ConfirmSaveChanges())
             {
-                // добавить Binding
                 string text = richTextBoxInput.Text;
                 _logic.Create(ref text);
                 richTextBoxInput.Text = text;
@@ -155,7 +147,6 @@ namespace TFLaComp_1
 
         private void HighlightResults(List<CardDTO> cards)
         {
-            //isHighlighted = true;
             richTextBoxInput.SelectAll();
             richTextBoxInput.SelectionColor = richTextBoxInput.ForeColor;
             richTextBoxInput.SelectionFont = richTextBoxInput.Font;
@@ -169,6 +160,20 @@ namespace TFLaComp_1
                 richTextBoxInput.SelectionFont = new Font(richTextBoxInput.Font, FontStyle.Bold);
             }
             isHighlighted = true;
+        }
+
+        private void Dehighlight()
+        {
+            int start = richTextBoxInput.SelectionStart;
+            richTextBoxInput.SelectionStart = 0;
+            richTextBoxInput.SelectionLength = richTextBoxInput.TextLength;
+
+            richTextBoxInput.SelectionColor = richTextBoxInput.ForeColor;
+            richTextBoxInput.SelectionFont = richTextBoxInput.Font;
+
+            richTextBoxInput.SelectionStart = start;
+            richTextBoxInput.SelectionLength = 0;
+            isHighlighted = false;
         }
 
         private void ProcessInput()
@@ -374,7 +379,6 @@ namespace TFLaComp_1
             }
             else if (result == DialogResult.No)
             {
-                //_logic.Close();
                 Application.Exit();
             }
         }
@@ -429,19 +433,7 @@ namespace TFLaComp_1
 
             isTextChanged = true;
             if (isHighlighted)
-            {
-                int start = richTextBoxInput.SelectionStart;
-
-                // вызывает этот метод заново, из-за чего все ломается
-                //richTextBoxInput.SelectAll();
-
-                richTextBoxInput.SelectionColor = richTextBoxInput.ForeColor;
-                richTextBoxInput.SelectionFont = richTextBoxInput.Font;
-                richTextBoxInput.SelectionStart = start;
-                //richTextBoxInput.SelectionColor = richTextBoxInput.ForeColor;
-                isHighlighted = false;
-            }
-            //isHighlighted = false;
+                Dehighlight();
         }
 
         private void InitEdit()
@@ -455,14 +447,6 @@ namespace TFLaComp_1
         {
             undo.Enabled = richTextBoxInput.CanUndo;
             redo.Enabled = richTextBoxInput.CanRedo;
-        }
-
-        private void richTextBoxInput_Enter(object sender, EventArgs e)
-        {
-            //richTextBoxInput.SelectAll();
-            //richTextBoxInput.SelectionColor = richTextBoxInput.ForeColor;
-            //richTextBoxInput.SelectionFont = richTextBoxInput.Font;
-
         }
     }
 }

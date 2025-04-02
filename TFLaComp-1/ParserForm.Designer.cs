@@ -411,7 +411,6 @@
             richTextBoxInput.Size = new Size(968, 358);
             richTextBoxInput.TabIndex = 9;
             richTextBoxInput.Text = "";
-            richTextBoxInput.Enter += richTextBoxInput_Enter;
             richTextBoxInput.KeyDown += richTextBoxInput_KeyDown;
             // 
             // copy
