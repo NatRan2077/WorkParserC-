@@ -159,7 +159,6 @@ namespace TFLaComp_1
 
         private void HighlightResults(List<CardDTO> cards)
         {
-            //isHighlighted = true;
             richTextBoxInput.SelectAll();
             richTextBoxInput.SelectionColor = richTextBoxInput.ForeColor;
             richTextBoxInput.SelectionFont = richTextBoxInput.Font;
@@ -173,6 +172,20 @@ namespace TFLaComp_1
                 richTextBoxInput.SelectionFont = new Font(richTextBoxInput.Font, FontStyle.Bold);
             }
             isHighlighted = true;
+        }
+
+        private void Dehighlight()
+        {
+            int start = richTextBoxInput.SelectionStart;
+            richTextBoxInput.SelectionStart = 0;
+            richTextBoxInput.SelectionLength = richTextBoxInput.TextLength;
+
+            richTextBoxInput.SelectionColor = richTextBoxInput.ForeColor;
+            richTextBoxInput.SelectionFont = richTextBoxInput.Font;
+
+            richTextBoxInput.SelectionStart = start;
+            richTextBoxInput.SelectionLength = 0;
+            isHighlighted = false;
         }
 
         private void ProcessInput()
@@ -436,18 +449,7 @@ namespace TFLaComp_1
         {
             isTextChanged = true;
             if (isHighlighted)
-            {
-                int start = richTextBoxInput.SelectionStart;
-                richTextBoxInput.SelectionStart = 0;
-                richTextBoxInput.SelectionLength = richTextBoxInput.TextLength;
-
-                richTextBoxInput.SelectionColor = richTextBoxInput.ForeColor;
-                richTextBoxInput.SelectionFont = richTextBoxInput.Font;
-
-                richTextBoxInput.SelectionStart = start;
-                richTextBoxInput.SelectionLength = 0;
-                isHighlighted = false;
-            }
+                Dehighlight();
             _edit.SetContent();
         }
 
