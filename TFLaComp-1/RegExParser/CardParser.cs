@@ -17,9 +17,9 @@ namespace TFLaComp_1.RegExParser
             input = input.Trim();
 
             string patternWithout = "\\d{16}";
-            string patternWithSpacess = "\\d{4}( \\d{4}){3}";
+            string patternWithSpaces = "\\d{4}( \\d{4}){3}";
 
-            string pattern = @"(^| )((" + patternWithout + ")" + "|" + "(" + patternWithSpacess + "))($?)";
+            string pattern = @"(^| )((" + patternWithout + ")" + "|" + "(" + patternWithSpaces + "))($?)";
 
             Match match = Regex.Match(input, pattern);
             while (match.Success)
@@ -33,7 +33,7 @@ namespace TFLaComp_1.RegExParser
                         value = value.Insert(4 + i * 4 + i, " ");
                     }
                 }
-                //string value = match.Value.Replace(" ", "");
+
                 CardDTO card = new CardDTO(value, match.Index, match.Index + match.Value.Length - 1);
                 cards.Add(card);
                 match = match.NextMatch();

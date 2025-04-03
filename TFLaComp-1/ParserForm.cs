@@ -141,10 +141,7 @@ namespace TFLaComp_1
 
         private void HighlightResults(List<CardDTO> cards)
         {
-            richTextBoxInput.SelectAll();
-            richTextBoxInput.SelectionColor = richTextBoxInput.ForeColor;
-            richTextBoxInput.SelectionFont = richTextBoxInput.Font;
-
+            Dehighlight();
 
             foreach (var card in cards)
             {

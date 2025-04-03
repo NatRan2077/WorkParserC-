@@ -32,7 +32,7 @@ namespace TFLaComp_1.Functional
 
         public void Paste()
         {
-            _richTextBox.Paste();
+            _richTextBox.Paste(DataFormats.GetFormat("Text"));
         }
 
         public void Undo()
