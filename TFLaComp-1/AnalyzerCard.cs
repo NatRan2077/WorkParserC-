@@ -86,7 +86,7 @@ namespace TFLaComp_1
 
         private string GetBankCode(CardDTO card)
         {
-            string bin = card.NumberCard.Substring(0, 4); // Первые 6 цифр — BIN
+            string bin = card.NumberCard.Substring(0, 4);
             
             if(BankCodes.TryGetValue(bin, out string? value))
             {

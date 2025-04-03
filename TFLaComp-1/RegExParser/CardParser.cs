@@ -19,7 +19,7 @@ namespace TFLaComp_1.RegExParser
             string patternWithout = "\\d{16}";
             string patternWithSpaces = "\\d{4}( \\d{4}){3}";
 
-            string pattern = @"(?<![^\s])(?<!\S)(?:\d[ ]*){16}(?!\S)|(?<![^\s])(?<!\S)(?:\d[ ]*){15}(?!\S)";
+            string pattern = @"(?<=\s|^)(\d{16}|(\d{4}( \d{4}){3}))(?=\s|$)";
 
             Match match = Regex.Match(input, pattern);
             while (match.Success)
