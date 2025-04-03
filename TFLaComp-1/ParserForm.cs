@@ -4,7 +4,6 @@ using TFLaComp_1.Functional;
 using TFLaComp_1.ParserHelp;
 using TFLaComp_1.RegExParser;
 using TFLaComp_1.ResultLog;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.TextBox;
 
 namespace TFLaComp_1
 {
@@ -54,11 +53,13 @@ namespace TFLaComp_1
 
         private void makeToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            // добавить Binding
-            string text = richTextBoxInput.Text;
-            _logic.Create(ref text);
-            richTextBoxInput.Text = text;
-            ClearOutput();
+            if (ConfirmSaveChanges())
+            {
+                string text = richTextBoxInput.Text;
+                _logic.Create(ref text);
+                richTextBoxInput.Text = text;
+                ClearOutput();
+            }
         }
 
         private void file_Click(object sender, EventArgs e)
@@ -75,17 +76,13 @@ namespace TFLaComp_1
         private void open_Click(object sender, EventArgs e)
         {
             if (ConfirmSaveChanges())
-            {
                 LoadFile();
-            }
         }
 
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (ConfirmSaveChanges())
-            {
                 LoadFile();
-            }
         }
 
         private bool ConfirmSaveChanges()
@@ -116,10 +113,7 @@ namespace TFLaComp_1
         {
             try
             {
-                string? text = _logic.Open();
-                if (text == null)
-                    throw new FileLoadException("Ошибка открытия файла!");
-
+                string? text = _logic.Open() ?? throw new FileLoadException("Ошибка открытия файла!");
                 richTextBoxInput.Text = text;
                 isTextChanged = false; // Сбрасываем флаг изменений
                 InitEdit();

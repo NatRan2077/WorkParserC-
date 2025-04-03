@@ -39,9 +39,9 @@ namespace TFLaComp_1
         private string GetPaymentSystem(CardDTO card)
         {
             string paymentSystemId = card.NumberCard.Substring(0, 1);
-            if (PaymentSystems.ContainsKey(paymentSystemId))
+            if (PaymentSystems.TryGetValue(paymentSystemId, out string? value))
             {
-                return PaymentSystems[paymentSystemId];
+                return value;
             }
             else
                 return "Неизвестная платежная система";
@@ -51,9 +51,9 @@ namespace TFLaComp_1
         {
             string bin = card.NumberCard.Substring(0, 4); // Первые 6 цифр — BIN
             
-            if(BankCodes.ContainsKey(bin))
+            if(BankCodes.TryGetValue(bin, out string? value))
             {
-                return BankCodes[bin];
+                return value;
             }
             else
                 return "Неизвестный банк";
