@@ -9,6 +9,6 @@ namespace TFLaComp_1.ResultLog
 {
     public interface ISaveResult
     {
-       void WriteToLog(List<CardDTO> cards);
+       void WriteToLog(List<FullCardDTO> cards);
     }
 }

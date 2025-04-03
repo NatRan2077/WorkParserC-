@@ -32,7 +32,7 @@ namespace TFLaComp_1.ResultLog
             File.WriteAllText(_countFilePath, _runCount.ToString());
         }
 
-        public void WriteToLog(List<CardDTO> cards)
+        public void WriteToLog(List<FullCardDTO> cards)
         {
             try
             {
@@ -45,6 +45,7 @@ namespace TFLaComp_1.ResultLog
                 foreach (var card in cards)
                 {
                     logEntry.AppendLine($"Карта: {card.NumberCard}, Индексы: {card.IndexStart}-{card.IndexEnd}");
+                    logEntry.AppendLine($"Банк: {card.Bank}, Платежная система: {card.PaymentSystem}");
                 }
 
                 logEntry.AppendLine(new string('-', 40));

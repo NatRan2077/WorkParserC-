@@ -175,10 +175,11 @@ namespace TFLaComp_1
             var parser = new CardParser();
             var results = parser.Parse(richTextBoxInput.Text);
             HighlightResults(results);
-            _saveResult.WriteToLog(results);
+            //_saveResult.WriteToLog(results);
 
             AnalyzerCard analyzerCard = new AnalyzerCard(results);
             PrintOutput(analyzerCard.Analyze());
+            _saveResult.WriteToLog(analyzerCard.Analyze());
 
             richTextBoxInput.ClearUndo();
             OnStateChanged();
