@@ -76,36 +76,5 @@ namespace TFLaComp_1
                 }
             }
         }
-
-        public void Close()
-        {
-            //Application.Exit();
-        }
-
-        public void WriteToLog()
-        {
-            try
-            {
-                string logEntry = $"{DateTime.Now}: {_richTextBoxOutput.Text}{Environment.NewLine}";
-                File.AppendAllText(_logFilePath, logEntry);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Ошибка при записи в лог-файл: {ex.Message}");
-            }
-        }
-
-        public void LogCurrentText(string filename)
-        {
-            try
-            {
-                string logEntry = $"{DateTime.Now}: {_richTextBoxOutput.Text}{Environment.NewLine}";
-                File.AppendAllText(filename, logEntry);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Ошибка при записи в лог-файл: {ex.Message}");
-            }
-        }
     }
 }

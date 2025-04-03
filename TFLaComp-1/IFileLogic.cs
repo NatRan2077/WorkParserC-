@@ -12,8 +12,5 @@ namespace TFLaComp_1
         void Save(string text);
         void SaveAs(string text);
         string Open();
-        void Close();
-        void WriteToLog();
-        void LogCurrentText(string text);
     }
 }
