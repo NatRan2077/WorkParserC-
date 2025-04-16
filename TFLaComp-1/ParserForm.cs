@@ -1,4 +1,4 @@
-using System.Windows.Forms;
+using TFLaComp_1.CardParser;
 using TFLaComp_1.DTO;
 using TFLaComp_1.Functional;
 using TFLaComp_1.ParserHelp;
@@ -169,13 +169,10 @@ namespace TFLaComp_1
 
         private void ProcessInput()
         {
-            var DKA = new CardNumberDFA();
-            var results = DKA.Run(richTextBoxInput.Text);
+            ICardParser cardParser = new DFACardParser();
+            var results = cardParser.Parse(richTextBoxInput.Text);
 
-            //var parser = new CardParser();
-            //var results = parser.Parse(richTextBoxInput.Text);
-            //HighlightResults(results);
-            //_saveResult.WriteToLog(results);
+            HighlightResults(results);
 
             AnalyzerCard analyzerCard = new AnalyzerCard(results);
 
@@ -448,7 +445,7 @@ namespace TFLaComp_1
         private void button1_Click(object sender, EventArgs e)
         {
             this.Hide();
-            
+
         }
     }
 }

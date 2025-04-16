@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TFLaComp_1.DTO; // подключаем DTO
+﻿using System.Text;
+using TFLaComp_1.DTO;
+using TFLaComp_1.RegExParser;
 
-namespace TFLaComp_1.RegExParser
+namespace TFLaComp_1.CardParser
 {
-    public class CardNumberDFA
+    public class DFACardParser : ICardParser
     {
         private enum State
         {
@@ -22,7 +19,7 @@ namespace TFLaComp_1.RegExParser
         private StringBuilder currentDigits;
         private List<CardDTO> foundCards;
 
-        public CardNumberDFA()
+        public DFACardParser()
         {
             currentState = State.Start;
             digitCount = 0;
@@ -31,7 +28,7 @@ namespace TFLaComp_1.RegExParser
             foundCards = new List<CardDTO>();
         }
 
-        public List<CardDTO> Run(string input)
+        public List<CardDTO> Parse(string input)
         {
             Reset();
 
