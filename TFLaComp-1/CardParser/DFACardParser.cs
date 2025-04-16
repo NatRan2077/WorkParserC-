@@ -34,10 +34,10 @@ namespace TFLaComp_1.CardParser
             for (int i = 0; i < input.Length; i++)
             {
                 char c = input[i];
-                ProcessChar(c, i);
+                ProcessChar(c, i, input);
             }
 
-            if (currentState == State.Digit && digitCount == 16)
+            if (digitCount == 16)
             {
                 foundCards.Add(new CardDTO(currentDigits.ToString(), startIndex, input.Length - 1));
             }
@@ -54,8 +54,18 @@ namespace TFLaComp_1.CardParser
             startIndex = -1;
         }
 
-        private void ProcessChar(char c, int index)
+        private void ResetPartial()
         {
+            currentState = State.Start;
+            digitCount = 0;
+            currentDigits.Clear();
+            startIndex = -1;
+        }
+
+        private void ProcessChar(char c, int index, string input)
+        {
+            bool isSeparator = c == ' ' || c == '-' || c == '_';
+
             switch (currentState)
             {
                 case State.Start:
@@ -72,54 +82,70 @@ namespace TFLaComp_1.CardParser
                 case State.Digit:
                     if (char.IsDigit(c))
                     {
-                        currentDigits.Append(c);
-                        digitCount++;
+                        if (digitCount < 16)
+                        {
+                            currentDigits.Append(c);
+                            digitCount++;
+                        }
+                        else
+                        {
+                            ResetPartial();
+                            return;
+                        }
+
                         if (digitCount == 16)
                         {
-                            foundCards.Add(new CardDTO(currentDigits.ToString(), startIndex, index));
-                            currentState = State.Start;
-                            digitCount = 0;
-                            currentDigits.Clear();
-                            startIndex = -1;
+                            if (index + 1 < input.Length && char.IsDigit(input[index + 1]))
+                            {
+                                ResetPartial();
+                            }
+                            else
+                            {
+                                foundCards.Add(new CardDTO(currentDigits.ToString(), startIndex, index));
+                                ResetPartial();
+                            }
                         }
                     }
-                    else if (c == ' ' || c == '-')
+                    else if (isSeparator)
                     {
                         currentState = State.Separator;
                     }
                     else
                     {
-                        currentState = State.Start;
-                        digitCount = 0;
-                        currentDigits.Clear();
-                        startIndex = -1;
+                        ResetPartial();
                     }
                     break;
 
                 case State.Separator:
                     if (char.IsDigit(c))
                     {
-                        currentDigits.Append(c);
-                        digitCount++;
-                        if (digitCount == 16)
+                        if (digitCount < 16)
                         {
-                            foundCards.Add(new CardDTO(currentDigits.ToString(), startIndex, index));
-                            currentState = State.Start;
-                            digitCount = 0;
-                            currentDigits.Clear();
-                            startIndex = -1;
+                            currentDigits.Append(c);
+                            digitCount++;
+                            currentState = State.Digit;
+
+                            if (digitCount == 16)
+                            {
+                                if (index + 1 < input.Length && char.IsDigit(input[index + 1]))
+                                {
+                                    ResetPartial();
+                                }
+                                else
+                                {
+                                    foundCards.Add(new CardDTO(currentDigits.ToString(), startIndex, index));
+                                    ResetPartial();
+                                }
+                            }
                         }
                         else
                         {
-                            currentState = State.Digit;
+                            ResetPartial();
                         }
                     }
                     else
                     {
-                        currentState = State.Start;
-                        digitCount = 0;
-                        currentDigits.Clear();
-                        startIndex = -1;
+                        ResetPartial();
                     }
                     break;
             }
