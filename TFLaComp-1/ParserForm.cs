@@ -169,7 +169,7 @@ namespace TFLaComp_1
 
         private void ProcessInput()
         {
-            var parser = new CardParser();
+            var parser = new RegExCardParser();
             var results = parser.Parse(richTextBoxInput.Text);
             HighlightResults(results);
             //_saveResult.WriteToLog(results);

@@ -1,25 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using TFLaComp_1.DTO;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace TFLaComp_1.RegExParser
 {
-    public class CardParser
+    public class RegExCardParser : ICardParser
     {
-        public List<CardDTO> Parse(string input) {
+        public List<CardDTO> Parse(string input)
+        {
             List<CardDTO> cards = new List<CardDTO>();
 
             input = input.Trim();
 
-            string patternWithout = "\\d{16}";
-            string patternWithSpaces = "\\d{4}( \\d{4}){3}";
+            StringBuilder digits = new StringBuilder();
 
-            string pattern = @"(?<=\s|^)(\d{16}|(\d{4}( \d{4}){3}))(?=\s|$)";
+            foreach (var item in AnalyzerCard.PaymentSystems)
+            {
+                digits = digits.Append(item.Key);
+            }
+
+            string pattern = $@"(?<!\d)([{digits}]\d{{15}}|([{digits}]\d{{3}}(?:\s\d{{4}}){{3}})|([{digits}]\d{{3}}(?:-\d{{4}}){{3}}))(?!\d)";
 
             Match match = Regex.Match(input, pattern);
             while (match.Success)

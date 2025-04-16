@@ -14,7 +14,7 @@ namespace TFLaComp_1
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
             Application.Run(new ParserForm());
-            //CardParser cardParser = new CardParser();
+            //RegExCardParser cardParser = new RegExCardParser();
             //string text = "1234lkdfg 2222 2333 4444 5555 2222";
             //List<CardDTO> list = cardParser.Parse(text);
         }
