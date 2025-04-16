@@ -1,6 +1,6 @@
 ﻿using TFLaComp_1.DTO;
 
-namespace TFLaComp_1.RegExParser
+namespace TFLaComp_1.CardParser
 {
     public interface ICardParser
     {

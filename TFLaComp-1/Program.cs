@@ -1,5 +1,3 @@
-using TFLaComp_1.RegExParser;
-
 namespace TFLaComp_1
 {
     internal static class Program

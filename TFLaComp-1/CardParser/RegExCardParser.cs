@@ -2,7 +2,7 @@
 using System.Text.RegularExpressions;
 using TFLaComp_1.DTO;
 
-namespace TFLaComp_1.RegExParser
+namespace TFLaComp_1.CardParser
 {
     public class RegExCardParser : ICardParser
     {

@@ -2,11 +2,15 @@ using TFLaComp_1.CardParser;
 using TFLaComp_1.DTO;
 using TFLaComp_1.Functional;
 using TFLaComp_1.ParserHelp;
-using TFLaComp_1.RegExParser;
 using TFLaComp_1.ResultLog;
 
 namespace TFLaComp_1
 {
+    public enum ParserType
+    {
+        Конечный_автомат, Регулярное_выражение
+    }
+
     public partial class ParserForm : System.Windows.Forms.Form
     {
         private IEdit _edit;
@@ -20,6 +24,8 @@ namespace TFLaComp_1
         private bool isTextChanged = false;
 
         private bool isHighlighted = false;
+
+        private Dictionary<string, ICardParser> _cardParsers;
 
         public ParserForm()
         {
@@ -49,6 +55,29 @@ namespace TFLaComp_1
             helpProvider1 = _helpProvider.HelpProvider;
 
             richTextBoxInput.TextChanged += richTextBoxInput_TextChanged;
+
+
+
+
+            _cardParsers = new Dictionary<string, ICardParser>();
+
+            foreach (var item in Enum.GetNames(typeof(ParserType)))
+            {
+                string name = item.Replace('_', ' ');
+
+                if (item == ParserType.Конечный_автомат.ToString())
+                {
+                    _cardParsers.Add(item, new DFACardParser());
+                }
+                if (item == ParserType.Регулярное_выражение.ToString())
+                {
+                    _cardParsers.Add(item, new RegExCardParser());
+                }
+
+                comboBoxParser.Items.Add(name);
+            }
+
+            comboBoxParser.SelectedIndex = 0;
         }
 
         private void makeToolStripMenuItem_Click(object sender, EventArgs e)
@@ -169,7 +198,10 @@ namespace TFLaComp_1
 
         private void ProcessInput()
         {
-            ICardParser cardParser = new DFACardParser();
+            string parserType = comboBoxParser.Text.Replace(' ', '_');
+
+            ICardParser cardParser = _cardParsers[parserType];
+
             var results = cardParser.Parse(richTextBoxInput.Text);
 
             HighlightResults(results);

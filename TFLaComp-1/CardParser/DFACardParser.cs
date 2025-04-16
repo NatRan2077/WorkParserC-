@@ -1,6 +1,5 @@
 ﻿using System.Text;
 using TFLaComp_1.DTO;
-using TFLaComp_1.RegExParser;
 
 namespace TFLaComp_1.CardParser
 {
