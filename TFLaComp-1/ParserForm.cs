@@ -169,12 +169,16 @@ namespace TFLaComp_1
 
         private void ProcessInput()
         {
-            var parser = new RegExCardParser();
-            var results = parser.Parse(richTextBoxInput.Text);
-            HighlightResults(results);
+            var DKA = new CardNumberDFA();
+            var results = DKA.Run(richTextBoxInput.Text);
+
+            //var parser = new CardParser();
+            //var results = parser.Parse(richTextBoxInput.Text);
+            //HighlightResults(results);
             //_saveResult.WriteToLog(results);
 
             AnalyzerCard analyzerCard = new AnalyzerCard(results);
+
             PrintOutput(analyzerCard.Analyze());
             _saveResult.WriteToLog(analyzerCard.Analyze());
 
@@ -439,6 +443,12 @@ namespace TFLaComp_1
         {
             undo.Enabled = richTextBoxInput.CanUndo;
             redo.Enabled = richTextBoxInput.CanRedo;
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            
         }
     }
 }
