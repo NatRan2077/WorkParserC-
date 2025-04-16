@@ -174,7 +174,7 @@ namespace TFLaComp_1
 
             //var parser = new CardParser();
             //var results = parser.Parse(richTextBoxInput.Text);
-            //HighlightResults(results);
+            HighlightResults(results);
             //_saveResult.WriteToLog(results);
 
             AnalyzerCard analyzerCard = new AnalyzerCard(results);
