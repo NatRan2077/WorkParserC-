@@ -11,8 +11,6 @@ namespace TFLaComp_1
     {
         private string currentFilePath = string.Empty;
 
-        private RichTextBox _richTextBoxOutput;
-
         private string _logFilePath = "log.txt";
 
         public void Create(ref string text)
