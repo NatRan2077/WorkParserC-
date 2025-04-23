@@ -31,11 +31,6 @@ namespace TFLaComp_1
                     //try
                     //{
                         return File.ReadAllText(currentFilePath);
-                    //}
-                    //catch (Exception ex)
-                    //{
-                    //    new Exception("Ошибка при чтении файла", ex);
-                    //}
                 }
             }
             return null;

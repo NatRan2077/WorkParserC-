@@ -1,5 +1,6 @@
+using System.Windows.Forms;
 using TFLaComp_1.CardParser;
-using TFLaComp_1.DTO;
+using TFLaComp_1.CardParser.Interface;
 using TFLaComp_1.Functional;
 using TFLaComp_1.ParserHelp;
 using TFLaComp_1.ResultLog;
@@ -19,13 +20,18 @@ namespace TFLaComp_1
 
         private IParserHelpProvider _helpProvider;
 
-        private ISaveResult _saveResult;
+      // private ISaveResult _saveResult;
+
+        private ITokenizer _tokenizer;
+
+        private IParser _parser;
+
 
         private bool isTextChanged = false;
 
         private bool isHighlighted = false;
 
-        private Dictionary<string, ICardParser> _cardParsers;
+        // private Dictionary<string, ICardParser> _cardParsers;
 
         public ParserForm()
         {
@@ -33,7 +39,7 @@ namespace TFLaComp_1
 
 
             this.HelpButton = true;
-            _saveResult = new SaveResult();
+            //_saveResult = new SaveResult();
             InitEdit();
             _logic = new FileLogic();
 
@@ -59,20 +65,20 @@ namespace TFLaComp_1
 
 
 
-            _cardParsers = new Dictionary<string, ICardParser>();
+            // _cardParsers = new Dictionary<string, ICardParser>();
 
             foreach (var item in Enum.GetNames(typeof(ParserType)))
             {
                 string name = item.Replace('_', ' ');
 
-                if (item == ParserType.Конечный_автомат.ToString())
-                {
-                    _cardParsers.Add(item, new DFACardParser());
-                }
-                if (item == ParserType.Регулярное_выражение.ToString())
-                {
-                    _cardParsers.Add(item, new RegExCardParser());
-                }
+                //if (item == ParserType.Конечный_автомат.ToString())
+                //{
+                //    _cardParsers.Add(item, new DFACardParser());
+                //}
+                //if (item == ParserType.Регулярное_выражение.ToString())
+                //{
+                //    //_cardParsers.Add(item, new RegExCardParser());
+                //}
 
                 comboBoxParser.Items.Add(name);
             }
@@ -168,19 +174,19 @@ namespace TFLaComp_1
             _logic.SaveAs(richTextBoxInput.Text);
         }
 
-        private void HighlightResults(List<CardDTO> cards)
-        {
-            Dehighlight();
+        //private void HighlightResults(List<CardDTO> cards)
+        //{
+        //    Dehighlight();
 
-            foreach (var card in cards)
-            {
-                richTextBoxInput.Select(card.IndexStart, card.IndexEnd - card.IndexStart + 1);
+        //    foreach (var card in cards)
+        //    {
+        //        richTextBoxInput.Select(card.IndexStart, card.IndexEnd - card.IndexStart + 1);
 
-                richTextBoxInput.SelectionColor = Color.Green;
-                richTextBoxInput.SelectionFont = new Font(richTextBoxInput.Font, FontStyle.Bold);
-            }
-            isHighlighted = true;
-        }
+        //        richTextBoxInput.SelectionColor = Color.Green;
+        //        richTextBoxInput.SelectionFont = new Font(richTextBoxInput.Font, FontStyle.Bold);
+        //    }
+        //    isHighlighted = true;
+        //}
 
         private void Dehighlight()
         {
@@ -195,51 +201,25 @@ namespace TFLaComp_1
             richTextBoxInput.SelectionLength = 0;
             isHighlighted = false;
         }
-
         private void ProcessInput()
         {
-            string parserType = comboBoxParser.Text.Replace(' ', '_');
+            string input = richTextBoxInput.Text;
 
-            ICardParser cardParser = _cardParsers[parserType];
+            var tokenizer = new Tokenizer(input);
+            var parser = new Parser(tokenizer.Tokens);
+            parser.Parse();
 
-            var results = cardParser.Parse(richTextBoxInput.Text);
+            var allErrors = tokenizer.Errors.Concat(parser.Errors).ToList();
 
-            HighlightResults(results);
-
-            AnalyzerCard analyzerCard = new AnalyzerCard(results);
-
-            PrintOutput(analyzerCard.Analyze());
-            _saveResult.WriteToLog(analyzerCard.Analyze());
+            var presenter = new ParserOutputPresenter(dataGridViewOutput);
+            presenter.ShowErrors(allErrors);
 
             richTextBoxInput.ClearUndo();
             OnStateChanged();
+
         }
 
-        private void PrintOutput(List<FullCardDTO> cards)
-        {
-            ClearOutput();
-
-            if (cards.Count <= 0) return;
-
-            dataGridViewOutput.Columns.Add("CardNumber", "Номер карты");
-            dataGridViewOutput.Columns.Add("Bank", "Банк");
-            dataGridViewOutput.Columns.Add("PaymentSystem", "Платежная система");
-            dataGridViewOutput.Columns.Add("Indexes", "Индексы");
-
-            if (cards.Count > 1)
-            {
-                dataGridViewOutput.Rows.Add(cards.Count - 1);
-            }
-
-
-            for (int i = 0; i < cards.Count; i++)
-            {
-                dataGridViewOutput.Rows[i].Cells[0].Value = cards[i].NumberCard;
-                dataGridViewOutput.Rows[i].Cells[1].Value = cards[i].Bank;
-                dataGridViewOutput.Rows[i].Cells[2].Value = cards[i].PaymentSystem;
-                dataGridViewOutput.Rows[i].Cells[3].Value = $"{cards[i].IndexStart} - {cards[i].IndexEnd}";
-            }
-        }
+       
 
         private void ClearOutput()
         {
@@ -477,6 +457,16 @@ namespace TFLaComp_1
         private void button1_Click(object sender, EventArgs e)
         {
             this.Hide();
+
+        }
+
+        private void comboBoxParser_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dataGridViewOutput_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
 
         }
     }
