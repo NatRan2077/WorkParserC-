@@ -11,11 +11,13 @@ namespace TFLaComp_1.CardParser
     {
         public int Position { get; }
         public string Message { get; }
+        public ErrorType Type { get; }
 
-        public SyntaxError(int position, string message)
+        public SyntaxError(int position, string message, ErrorType type = ErrorType.Syntax)
         {
             Position = position;
             Message = message;
+            Type = type;
         }
 
         public override string ToString()

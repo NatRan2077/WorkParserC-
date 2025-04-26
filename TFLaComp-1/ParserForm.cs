@@ -207,16 +207,16 @@ namespace TFLaComp_1
 
             var tokenizer = new Tokenizer(input);
             var parser = new Parser(tokenizer.Tokens);
+
             parser.Parse();
 
-            var allErrors = tokenizer.Errors.Concat(parser.Errors).ToList();
+            var allErrors = tokenizer.Errors.Concat(parser.Errors).OrderBy(e => e.Position).ToList();
 
             var presenter = new ParserOutputPresenter(dataGridViewOutput);
             presenter.ShowErrors(allErrors);
 
             richTextBoxInput.ClearUndo();
             OnStateChanged();
-
         }
 
        

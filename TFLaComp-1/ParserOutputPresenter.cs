@@ -37,19 +37,32 @@ namespace TFLaComp_1
             grid.Rows.Clear();
 
             grid.Columns.Add("Position", "Позиция");
+            grid.Columns.Add("Type", "Тип");
             grid.Columns.Add("Message", "Сообщение");
 
             if (errors.Count == 0)
             {
-                grid.Rows.Add("-", "Ошибок не найдено");
+                grid.Rows.Add("-", "-", "Ошибок не найдено");
             }
             else
             {
                 foreach (var error in errors)
                 {
-                    grid.Rows.Add(error.Position, error.Message);
+                    int rowIndex = grid.Rows.Add(error.Position, error.Type == ErrorType.Lexical ? "Лексическая" : "Синтаксическая", error.Message);
+
+                    // Подсветка строк
+                    if (error.Type == ErrorType.Lexical)
+                    {
+                        grid.Rows[rowIndex].DefaultCellStyle.BackColor = System.Drawing.Color.LightPink;
+                    }
+                    else
+                    {
+                        grid.Rows[rowIndex].DefaultCellStyle.BackColor = System.Drawing.Color.LightYellow;
+                    }
                 }
             }
+
+            grid.AutoResizeColumns();
         }
     }
 }

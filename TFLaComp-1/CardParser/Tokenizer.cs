@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using TFLaComp_1.CardParser.Interface;
 
 namespace TFLaComp_1.CardParser
@@ -40,12 +36,13 @@ namespace TFLaComp_1.CardParser
                 }
                 else if (c == '>' && i + 1 < input.Length && input[i + 1] == '<')
                 {
-                    Errors.Add(new SyntaxError(i, "Недопустимая последовательность '><'"));
+                    Errors.Add(new SyntaxError(i, "Недопустимая последовательность '><'", ErrorType.Lexical));
                     i += 2;
+                    continue;
                 }
                 else if (c == '<')
                 {
-                    Errors.Add(new SyntaxError(i, $"Одиночный символ '<' недопустим. Используйте '<<'"));
+                    Errors.Add(new SyntaxError(i, "Одиночный символ '<' недопустим. Используйте '<<'", ErrorType.Lexical));
                     i++;
                     continue;
                 }
@@ -75,7 +72,7 @@ namespace TFLaComp_1.CardParser
                         number += input[i];
                         i++;
                     }
-                    Errors.Add(new SyntaxError(start, $"Недопустимая лексема: {number}"));
+                    Errors.Add(new SyntaxError(start, $"Недопустимая лексема: {number}", ErrorType.Lexical));
                     continue;
                 }
                 else
@@ -92,12 +89,10 @@ namespace TFLaComp_1.CardParser
                         invalid += input[i];
                         i++;
                     }
-                    Errors.Add(new SyntaxError(start, $"Недопустимая лексема: {invalid}"));
+                    Errors.Add(new SyntaxError(start, $"Недопустимая лексема: {invalid}", ErrorType.Lexical));
                     continue;
                 }
             }
         }
-
-
     }
 }
