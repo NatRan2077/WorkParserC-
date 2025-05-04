@@ -27,17 +27,11 @@ namespace TFLaComp_1.CardParser
             {
                 ParseOutput();
 
-                // Если после выражения остались лишние токены — пытаемся перейти к следующему cout
                 if (_position < _tokens.Count && Current != "cout")
                 {
                     Errors.Add(new SyntaxError(_position, $"Неожиданный токен вне выражения: '{Current}'"));
                     Synchronize(new[] { "cout" });
                 }
-            }
-
-            if (!_semicolonFound && _tokens.Count > 0 && _tokens.Last() != ";")
-            {
-                Errors.Add(new SyntaxError(_tokens.Count - 1, "Пропущена точка с запятой ';' в конце оператора"));
             }
         }
 
@@ -53,7 +47,7 @@ namespace TFLaComp_1.CardParser
             else
             {
                 Errors.Add(new SyntaxError(_position, $"Ожидалось 'cout', найдено '{Current ?? "конец"}'"));
-                Synchronize(new[] { "cout", ";" }); // Пропускаем до следующего cout или конца выражения
+                Synchronize(new[] { "cout", ";" }); 
             }
         }
 
@@ -67,7 +61,7 @@ namespace TFLaComp_1.CardParser
             else
             {
                 Errors.Add(new SyntaxError(_position, $"Ожидалось '<<', найдено '{Current ?? "конец"}'"));
-                Synchronize(new[] { "<<", ";", "cout" }); // Попробуем восстановиться до следующего оператора или конца
+                Synchronize(new[] { "<<", ";", "cout" }); 
             }
 
             if (Current == "<<")
@@ -82,7 +76,7 @@ namespace TFLaComp_1.CardParser
             else if (Current == ";")
             {
                 _semicolonFound = true;
-                Match(";"); // <<< обязательно съесть ';'
+                Match(";"); 
             }
 
             return;
@@ -103,7 +97,7 @@ namespace TFLaComp_1.CardParser
                 if (Current == ";")
                 {
                     _semicolonFound = true;
-                    Match(";"); // <<< Съедаем ;, чтобы не споткнуться дальше!
+                    Match(";");
                 }
 
                 return;
